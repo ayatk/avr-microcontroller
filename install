@@ -1,0 +1,5 @@
+
+cmake .
+make
+yes | cp work-atmega88pa.hex /dev/`ls /dev/ | grep cu.usbmodem`
+make clean
