@@ -1,8 +1,18 @@
 # Project name
 PROJECT =  work
 
+# Week number
+W = 0
+
+# Exercise number
+E = 0
+
 # Source files
-SRCS = test.c
+ifeq ($(W), 0)
+	SRCS = $(shell ls src/**/*.c)
+else
+	SRCS = training/week$(W)/work$(E).c
+endif
 
 # Device name
 DEV = /dev/ttyACM0
@@ -10,7 +20,7 @@ DEV = /dev/ttyACM0
 # if macOS used
 UNAME = $(shell uname)
 ifeq ($(UNAME),Darwin)
-     DEV = $(shell ls /dev/* | grep cu.usbmodem)
+	DEV = $(shell ls /dev/* | grep cu.usbmodem)
 endif
 
 # output source directory
