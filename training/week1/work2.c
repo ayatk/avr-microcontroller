@@ -18,11 +18,9 @@ int main() {
 
     // Main event loop
     while (1) {
-
-        // LED1
-        PORTC = (show_led & led1) != 0 ? 0x10 : 0x00;
-        // LED2
-        PORTC = (show_led & led2) != 0 ? 0x20 : 0x00;
+        // LED
+        PORTC = ((show_led & led1) != 0 ? 0x10 : 0x00)
+                + ((show_led & led2) != 0 ? 0x20 : 0x00);
 
         cnt++;
         wdt_reset();
