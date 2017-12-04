@@ -56,6 +56,7 @@ ${HEXFILE}:	${OBJECTS}
 	@avr-size -C --mcu=${MPU} ${ELFFILE}
 
 dl:	all
+	bin/emb88_reset ${DEV}
 	/bin/cp ${HEXFILE} ${DEV}
 
 clean:
