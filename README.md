@@ -1,17 +1,26 @@
 # avr microcontroller
 
 ## Requirement
-
-* CMake
+* x64 architecture Linux or macOS
+* make
 * avr-gcc
 
 ## Run
-1. Using `cu` command to open serial console.
-```
-$ sudo cu -s 38400 -l /dev/<avr board device>
-```
-2. Run `make` command in Project root directory.
-```
-$ make
-```
-3. Enjoy!!!!!!
+- Using `cu` command to open serial console.
+
+        $ sudo cu -s 38400 -l /dev/<avr board device>
+
+- Run `make` command in project root directory.
+
+        $ make
+
+- When if training source build.
+
+        # build training/week1/work1.c file.
+        $ make W=1 E=1
+
+- When direct writing into AVR Board.
+
+        $ make dl
+
+- Enjoy!!!!!!
