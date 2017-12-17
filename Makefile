@@ -9,7 +9,7 @@ E = 0
 
 # Source files
 ifeq ($(W), 0)
-	SRCS = $(shell ls src/**/*.c)
+	SRCS = $(wildcard src/*.c)
 else
 	SRCS = training/week$(W)/work$(E).c
 endif
