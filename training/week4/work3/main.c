@@ -14,47 +14,47 @@ static volatile uchar rnd;        //  擬似乱数のカウンタ
 
 /* マトリクスLEDのダイナミック点灯(2ms毎) */
 ISR(TIMER0_COMPA_vect) {
-        static uchar sc = 0xFE;
-        static uchar scan = 0;        //  LED 走査カウンタ
+    static uchar sc = 0xFE;
+    static uchar scan = 0;        //  LED 走査カウンタ
 
-        // LEDの更新
-        PORTB = 0;    // 残像対策
-        sc = (sc << 1) | (sc >> 7);
-        PORTD = (PORTD & 0x0F) | (sc & 0xF0);    // 上位4ビット書き換え
-        PORTC = (PORTC & 0xF0) | (sc & 0x0F);    // 下位4ビット書き換え
-        scan = (scan + 1) & 7;
-        PORTB = led[scan];
+    // LEDの更新
+    PORTB = 0;    // 残像対策
+    sc = (sc << 1) | (sc >> 7);
+    PORTD = (PORTD & 0x0F) | (sc & 0xF0);    // 上位4ビット書き換え
+    PORTC = (PORTC & 0xF0) | (sc & 0x0F);    // 下位4ビット書き換え
+    scan = (scan + 1) & 7;
+    PORTB = led[scan];
 }
 
 /* スイッチ処理 */
 ISR(PCINT1_vect) {
-        OCR1A = TCNT1 + 500;    // タイマ1に比較値設定(今から64ms後に割り込む)
-        TIFR1 = _BV(OCF1A);        // フラグクリア
-        TIMSK1 |= _BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み有効化
-        rnd++;                    // 乱数も更新
+    OCR1A = TCNT1 + 500;    // タイマ1に比較値設定(今から64ms後に割り込む)
+    TIFR1 = _BV(OCF1A);        // フラグクリア
+    TIMSK1 |= _BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み有効化
+    rnd++;                    // 乱数も更新
 }
 
 ISR(TIMER1_COMPA_vect) {// チャタリング終了後，64ms後に呼び出される
 
-        sw = (~PINC >> 4) & 3;    // スイッチ変数の更新
-        sw_flag = 1;
-        TIMSK1 &= ~_BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み無効化
+    sw = (~PINC >> 4) & 3;    // スイッチ変数の更新
+    sw_flag = 1;
+    TIMSK1 &= ~_BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み無効化
 }
 
 /* ユーザ処理のための割り込み */
 ISR(TIMER1_COMPB_vect) {
-        OCR1B = TCNT1 + 780;
-        TIFR1 = _BV(OCF1B);    // フラグクリア
-        if (delay) {    // 待ち
-            delay--;
+    OCR1B = TCNT1 + 780;
+    TIFR1 = _BV(OCF1B);    // フラグクリア
+    if (delay) {    // 待ち
+        delay--;
+    }
+    if (period) {    //  ブザー停止
+        period--;
+        if (period == 0) {
+            TCCR2A = 0;
         }
-        if (period) {    //  ブザー停止
-            period--;
-            if (period == 0) {
-                TCCR2A = 0;
-            }
-        }
-        user_flag = 1;    // ユーザコードを呼び出す
+    }
+    user_flag = 1;    // ユーザコードを呼び出す
 }
 
 int main(void) {

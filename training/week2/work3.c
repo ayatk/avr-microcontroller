@@ -10,14 +10,14 @@ unsigned char sw;
 unsigned char sw_flag;
 
 unsigned char led[8] = {
-        0b00011000,
-        0b00111000,
-        0b01111000,
-        0b00011000,
-        0b00011000,
-        0b00011000,
-        0b00011000,
-        0b01111110,
+    0b00011000,
+    0b00111000,
+    0b01111000,
+    0b00011000,
+    0b00011000,
+    0b00011000,
+    0b00011000,
+    0b01111110,
 };
 
 void update_led() {
@@ -40,22 +40,22 @@ void update_sw() {
     tmp = (~PINC >> 4) & 3;
 
     switch (stat) {
-        case 0:
+    case 0:
+        if (sw != tmp) {
+            cnt = CHATTERING;
+            stat = 1;
+        }
+        break;
+    case 1:
+        cnt--;
+        if (cnt == 0) {
             if (sw != tmp) {
-                cnt = CHATTERING;
-                stat = 1;
+                sw_flag = 1;
+                sw = tmp;
             }
-            break;
-        case 1:
-            cnt--;
-            if (cnt == 0) {
-                if (sw != tmp) {
-                    sw_flag = 1;
-                    sw = tmp;
-                }
-                stat = 0;
-            }
-            break;
+            stat = 0;
+        }
+        break;
     }
     return;
 }
@@ -95,18 +95,18 @@ int main() {
             int i, k;
             unsigned char tmp_led;
             switch (sw) {
-                case 1:
-                    for (i = 0; i < 8; ++i) led[i] = (led[i] >> 1) | (led[i] << 7);
-                    break;
-                case 2:
-                    reverse(led, 7);
-                    reverse(led, 8);
-                    break;
-                case 3:
-                    reverse(led, 7);
-                    reverse(led, 8);
-                    for (k = 0; k < 8; ++k) led[k] = (led[k] >> 1) | (led[k] << 7);
-                    break;
+            case 1:
+                for (i = 0; i < 8; ++i) led[i] = (led[i] >> 1) | (led[i] << 7);
+                break;
+            case 2:
+                reverse(led, 7);
+                reverse(led, 8);
+                break;
+            case 3:
+                reverse(led, 7);
+                reverse(led, 8);
+                for (k = 0; k < 8; ++k) led[k] = (led[k] >> 1) | (led[k] << 7);
+                break;
             }
         }
     }

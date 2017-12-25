@@ -108,18 +108,18 @@ void user_init(void) {
 void user_main(void) {
     floor_up_or_down();
     switch (state) {
-        case 0:
-            state = 1;
-            break;
-        case 1:
-            show_floor_num();
-            break;
-        case 2:
-            floor_down();
-            break;
-        case 3:
-            floor_up();
-            break;
+    case 0:
+        state = 1;
+        break;
+    case 1:
+        show_floor_num();
+        break;
+    case 2:
+        floor_down();
+        break;
+    case 3:
+        floor_up();
+        break;
     }
     update_led();
 }
@@ -154,7 +154,7 @@ static void floor_down(void) {
     if (count < 20) {
         reverse(tmp, 7);
         reverse(tmp, 8);
-         count++;
+        count++;
     } else {
         state = 0;
         count = 0;

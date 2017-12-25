@@ -10,13 +10,13 @@ volatile unsigned char level = 100;	// 音量
 unsigned char sw;
 unsigned char sw_flag;
 
-ISR(TIMER2_OVF_vect){
-	static unsigned char cnt = 0;
-	cnt++;
-	if (cnt >= tone) {
-		cnt = 0;
-		OCR2B = OCR2B ? 0 : level;
-	}
+ISR(TIMER2_OVF_vect) {
+    static unsigned char cnt = 0;
+    cnt++;
+    if (cnt >= tone) {
+        cnt = 0;
+        OCR2B = OCR2B ? 0 : level;
+    }
 }
 
 void update_sw() {
@@ -48,17 +48,17 @@ void update_sw() {
 }
 
 int main(void) {
-	DDRC = 0x0F;
-	DDRD = 0xF8;
+    DDRC = 0x0F;
+    DDRD = 0xF8;
 
-	PORTC = 0x30;	// 入力ピンをプルアップ
-	PORTD = 0x00;
+    PORTC = 0x30;	// 入力ピンをプルアップ
+    PORTD = 0x00;
 
-	TCCR2A = 0x23;
-	TCCR2B = 0x01;
-	OCR2B = 0;
+    TCCR2A = 0x23;
+    TCCR2B = 0x01;
+    OCR2B = 0;
 
-	TIMSK2 = 1 << TOIE2;
+    TIMSK2 = 1 << TOIE2;
 
     sei();
     for (;;) {

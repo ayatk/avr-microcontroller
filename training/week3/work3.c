@@ -5,15 +5,15 @@
 volatile unsigned char count;
 
 ISR(TIMER2_COMPA_vect) {
-        PORTD ^= _BV(PORTD3);
+    PORTD ^= _BV(PORTD3);
 }
 
 ISR(TIMER1_COMPA_vect) {
-        PORTB++;
-        if (count <= 1) {
-            TIMSK2 ^= _BV(OCIE2A);
-        }
-        count = (count == 10) ? 0: count + 1;
+    PORTB++;
+    if (count <= 1) {
+        TIMSK2 ^= _BV(OCIE2A);
+    }
+    count = (count == 10) ? 0: count + 1;
 }
 
 int main() {

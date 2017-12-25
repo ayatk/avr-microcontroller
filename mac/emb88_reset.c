@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
         ioctl(fd, TIOCMBIS, &dtr);   // DTRセット
     }
 
-    ERR:
+ERR:
     close(fd);
     sleep(2); // （重要）
     return 0;
