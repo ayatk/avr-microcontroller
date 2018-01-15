@@ -23,17 +23,17 @@ ISR(USART_RX_vect) {
         return;
     }
 
-    if(buf[n-1] == ',') {
-        hz = atoi(buf);
+    if (buf[n-1] == '\r') {
+        // 読み込み
+        fscanf(buf, "%d,%d", &hz, &msec);
+        
+        // hzのバリデーション
         if (hz > 2000) {
             hz = 2000;
         } else if (hz < 262) {
             hz = 262;
         }
-        n = 0;
-    }
-    if (buf[n-1] == '\r') {
-        msec = atoi(buf);
+
         PORTB = OCR2A = (8000000 / (2 * 64 * hz)) - 1;
         is_beep = 1;
         n = 0;

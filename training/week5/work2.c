@@ -22,12 +22,13 @@ ISR(USART_RX_vect) {
         return;
     }
     if (buf[n - 1] == '\r') {
-        if (atoi(buf) > 2000) {
+        hz = atoi(buf);
+
+        // hzのバリデーション
+        if (hz > 2000) {
             hz = 2000;
-        } else if (atoi(buf) < 262) {
+        } else if (hz < 262) {
             hz = 262;
-        } else {
-            hz = atoi(buf);
         }
 
         PORTB = OCR2A = (8000000 / (2 * 64 * hz)) - 1;
