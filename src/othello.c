@@ -2,19 +2,17 @@
 #include <string.h>
 #include "user.h"
 
-unsigned int flash_count;
+static uchar flash_count;
 
-static uchar cursor_matrix[LED_SZ] = {
-    0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
-unsigned int cursor_x = 0;
-unsigned int cursor_y = 0;
+static uchar cursor_matrix[LED_SZ] = { 0 };
+static uchar cursor_x = 0;
+static uchar cursor_y = 0;
 
-void reverse(char *array, int size) {
-    int j;
+void reverse(uchar *array, uchar size) {
+    uchar j;
 
     for (j = 0; j < size / 2; j++) {
-        int t = array[j];
+        uchar t = array[j];
         array[j] = array[size - j - 1];
         array[size - j - 1] = t;
     }
@@ -47,7 +45,7 @@ void flash(void) {
 }
 
 void user_init(void) {
-    led[0] = 1;
+    cursor_matrix[0] = 1;
 }
 
 void user_main(void) {
