@@ -1,6 +1,7 @@
 #include <math.h>
 #include <string.h>
 #include "lib.h"
+#include "switch.h"
 
 static uchar flash_count;
 
@@ -19,8 +20,8 @@ void reverse(uchar *array, uchar size) {
 }
 
 void flash(void) {
-    switch (sw) {
-    case 0:
+    switch (GetSwitchState()) {
+    case SW_NONE:
         if (flash_count == 5) {
 
             if (led[cursor_y] == 0) {
@@ -36,8 +37,8 @@ void flash(void) {
 
         break;
 
-    case 1:
-    case 2:
+    case SW_LEFT:
+    case SW_RIGHT:
         flash_count = 0;
         memcpy(led, cursor_matrix, sizeof(led));
         break;
@@ -49,13 +50,13 @@ void init(void) {
 }
 
 void loop(void) {
-    switch (sw) {
-    case 1:
+    switch (GetSwitchState()) {
+    case SW_LEFT:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);
         cursor_x = log10(cursor_matrix[cursor_y]) / log10(2);
         break;
 
-    case 2:
+    case SW_RIGHT:
         cursor_y = (cursor_y == 7) ? 0 : cursor_y + 1;
         reverse(cursor_matrix, 7);
         reverse(cursor_matrix, 8);
