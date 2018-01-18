@@ -14,20 +14,25 @@ ISR(PCINT1_vect) {
 
 void update_sw() {
     static unsigned long cnt;
+
     switch (stat) {
     case 0:
         return;
+
     case 1:
         cnt = CTOP;
         stat = 2;
         return;
+
     case 2:
         cnt--;
+
         if (cnt == 0) {
             sw = ~(PINC >> 4) & 3;    // 変数swを更新
             sw_flag = 1;    // フラグを立てる
             stat = 0;
         }
+
         return;
     }
 }
@@ -50,20 +55,26 @@ int main() {
     for (;;) {    // イベントループ
         wdt_reset();
         update_sw();
+
         if (sw_flag) {
             sw_flag = 0;
+
             switch (sw) {
             case 0:
                 break;
+
             case 1:
                 PORTC ^= 0x20;
                 break;
+
             case 3:
                 PORTC ^= 0x20;
                 break;
             }
         }
+
         PORTB = sw + (stat << 2);
     }
+
     return 0;
 }

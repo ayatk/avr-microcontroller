@@ -10,10 +10,12 @@ ISR(TIMER2_COMPA_vect) {
 
 ISR(TIMER1_COMPA_vect) {
     PORTB++;
+
     if (count <= 1) {
         TIMSK2 ^= _BV(OCIE2A);
     }
-    count = (count == 10) ? 0: count + 1;
+
+    count = (count == 10) ? 0 : count + 1;
 }
 
 int main() {
@@ -39,5 +41,6 @@ int main() {
     for (;;) {
         wdt_reset();
     }
+
     return 0;
 }

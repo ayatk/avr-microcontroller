@@ -6,12 +6,14 @@ volatile unsigned char count;
 
 ISR(TIMER1_COMPA_vect) {
     PORTB++;
+
     if (count < 1) {
         TIMSK2 = 1 << TOIE2;
     } else {
         TIMSK2 = 0;
     }
-    count = (count == 10) ? 0: count + 1;
+
+    count = (count == 10) ? 0 : count + 1;
 }
 
 int main(void) {
@@ -27,6 +29,7 @@ int main(void) {
 
     TIMSK1 = _BV(PCIE1);
     sei();
+
     for (;;) {
         wdt_reset();
     }

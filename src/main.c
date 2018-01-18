@@ -45,15 +45,19 @@ ISR(TIMER1_COMPA_vect) {// チャタリング終了後，64ms後に呼び出さ�
 ISR(TIMER1_COMPB_vect) {
     OCR1B = TCNT1 + 780;
     TIFR1 = _BV(OCF1B);    // フラグクリア
+
     if (delay) {    // 待ち
         delay--;
     }
+
     if (period) {    //  ブザー停止
         period--;
+
         if (period == 0) {
             TCCR2A = 0;
         }
     }
+
     user_flag = 1;    // ユーザコードを呼び出す
 }
 
@@ -87,13 +91,16 @@ int main(void) {
 
     user_init();    // ユーザ処理初期化
     sei();          // システムとしての割り込みの有効化
+
     for (user_flag = 0;;) {
         wdt_reset();
+
         if (user_flag) {    //  ユーザー処理の起動
             user_main();
             user_flag = 0;
         }
     }
+
     return 0;
 }
 

@@ -28,12 +28,14 @@ int main(int argc, char *argv[]) {
         perror(devname);
         exit(1);
     }
+
     // printf("EMB88 Reset DTR [%s]\n", devname);
 
     /* 他のプロセスでシリアル通信が継続的に行われていると，1回のDTRリセットでは
        PROGモードに以降できないことがある．以下を繰り返すと大抵PROGにモードに移行できる．
     */
     int cnt = 50;
+
     while (--cnt) {
         ioctl(fd, TIOCMBIC, &dtr);   // DTRクリア
         usleep(1000);

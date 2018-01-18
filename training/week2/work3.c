@@ -45,23 +45,30 @@ void update_sw() {
             cnt = CHATTERING;
             stat = 1;
         }
+
         break;
+
     case 1:
         cnt--;
+
         if (cnt == 0) {
             if (sw != tmp) {
                 sw_flag = 1;
                 sw = tmp;
             }
+
             stat = 0;
         }
+
         break;
     }
+
     return;
 }
 
 void reverse(char *array, int size) {
     int j;
+
     for (j = 0; j < size / 2; j++) {
         int t = array[j];
         array[j] = array[size - j - 1];
@@ -88,27 +95,35 @@ int main() {
 
         update_sw();
         update_led();
+
         if (cnt > CTOP) {
 
             cnt = 0;
 
             int i, k;
             unsigned char tmp_led;
+
             switch (sw) {
             case 1:
                 for (i = 0; i < 8; ++i) led[i] = (led[i] >> 1) | (led[i] << 7);
+
                 break;
+
             case 2:
                 reverse(led, 7);
                 reverse(led, 8);
                 break;
+
             case 3:
                 reverse(led, 7);
                 reverse(led, 8);
+
                 for (k = 0; k < 8; ++k) led[k] = (led[k] >> 1) | (led[k] << 7);
+
                 break;
             }
         }
     }
+
     return 0;
 }

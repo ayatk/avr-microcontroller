@@ -13,6 +13,7 @@ unsigned char sw_flag;
 ISR(TIMER2_OVF_vect) {
     static unsigned char cnt = 0;
     cnt++;
+
     if (cnt >= tone) {
         cnt = 0;
         OCR2B = OCR2B ? 0 : level;
@@ -32,18 +33,24 @@ void update_sw() {
             cnt = CTOP;
             stat = 1;
         }
+
         break;
+
     case 1:
         cnt--;
+
         if (cnt == 0) {
             if (sw != tmp) {
                 sw_flag = 1;    // フラグを立てる
                 sw = tmp;    // 変数swを更新
             }
+
             stat = 0;
         }
+
         break;
     }
+
     return;
 }
 
@@ -61,21 +68,25 @@ int main(void) {
     TIMSK2 = 1 << TOIE2;
 
     sei();
+
     for (;;) {
         update_sw();
 
         if (sw_flag) {    // スイッチ変化を検出したら
             sw_flag = 0;    // フラグをクリア
+
             switch (sw) {
             case 1:
                 tone--;
                 OCR2A = 114;
                 break;
+
             case 2:
                 tone++;
                 break;
             }
         }
+
         wdt_reset();
     }
 }

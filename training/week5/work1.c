@@ -168,7 +168,7 @@ ISR(TIMER1_COMPA_vect) {
         f (count >= 5) {
             memcpy(show_led, no_led, sizeof(no_led));
         }
-        count = (count == 10) ? 0: count + 1;
+        count = (count == 10) ? 0 : count + 1;
     }
     TCCR1B = 0x0D;
     TCCR1A = 0x00;
@@ -180,9 +180,11 @@ ISR(TIMER1_COMPA_vect) {
     OCR2A = 0;
 
     sei();
+
     for (;;) {
         update_led();
         wdt_reset();
     }
+
     return 0;
 }

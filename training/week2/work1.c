@@ -31,9 +31,11 @@ int main() {
             if (n == 9) {
                 add = -1;
             }
+
             if (n == 0) {
                 add = 1;
             }
+
             n += add;
         }
     }

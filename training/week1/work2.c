@@ -33,8 +33,10 @@ int main() {
                 show_led >>= 1;
                 loop_count -= 1;
             }
+
             cnt = 0;
         }
     }
+
     return 0;
 }

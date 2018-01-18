@@ -17,10 +17,12 @@ ISR(USART_RX_vect) {
 
     buf[n] = UDR0;
     n++;
+
     if (N <= n) {
         n = 0;
         return;
     }
+
     if (buf[n - 1] == '\r') {
         hz = atoi(buf);
 
@@ -73,8 +75,10 @@ int main(void) {
     OCR2A = 0;
 
     sei();
+
     for (;;) {
         wdt_reset();
     }
+
     return 0;
 }

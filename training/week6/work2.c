@@ -23,6 +23,7 @@ ISR(ADC_vect) {
     TIFR1 = _BV(OCF1B);	// トリガー用のフラグのクリア
     val = ADC;
     adc_flag = 1;
+
     if (adev == LED1) {	// LEDは光入力に鈍感なので，その対策
         DDRC |= 0x10;	// 出力ピンに変更
         PORTC &= ~0x10;	// 出力電圧を0Vにする(放電される)
@@ -33,6 +34,7 @@ ISR(ADC_vect) {
 ISR(USART_UDRE_vect) {
     static char n;
     UDR0 = buff[n++];
+
     if (buff[n] == '\0') {
         UCSR0B &= ~_BV(UDRIE0);	// 空き割り込み停止
         n = 0;
@@ -72,11 +74,12 @@ int main(void) {
 
     for (;;) {
         wdt_reset();
+
         if (adc_flag) {
-            itoa((((val * 100) * 4.5))/1024, buff, 10);
+            itoa((((val * 100) * 4.5)) / 1024, buff, 10);
             // 下位2桁を切り取り
-            int low_digit = (strlen(buff)>2)?2:1;
-            strncpy(low, buff+(strlen(buff)-low_digit), strlen(buff));
+            int low_digit = (strlen(buff) > 2) ? 2 : 1;
+            strncpy(low, buff + (strlen(buff) - low_digit), strlen(buff));
             // 下位2桁を削除
             strncpy(buff, buff, 1);
             buff[1] = '\0';
@@ -93,5 +96,6 @@ int main(void) {
             adc_flag = 0;
         }
     }
+
     return 0;
 }

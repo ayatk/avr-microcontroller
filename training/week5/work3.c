@@ -18,15 +18,16 @@ ISR(USART_RX_vect) {
 
     buf[n] = UDR0;
     n++;
+
     if (N <= n) {
         n = 0;
         return;
     }
 
-    if (buf[n-1] == '\r') {
+    if (buf[n - 1] == '\r') {
         // 読み込み
         fscanf(buf, "%d,%d", &hz, &msec);
-        
+
         // hzのバリデーション
         if (hz > 2000) {
             hz = 2000;
@@ -63,22 +64,24 @@ int main(void) {
     UBRR0 = (F_CPU >> 4) / BAUD - 1;
     UCSR0C = 0x06;
 
-// 受信（割り込み）
+    // 受信（割り込み）
     UCSR0B = _BV(RXCIE0) | _BV(RXEN0);
 
     TCCR1B = 0x0B;
     TCCR1A = 0x00;
     OCR1A = 124;
 
-// タイマ2(CTC,COM)
+    // タイマ2(CTC,COM)
     TCCR2B = 0x44; // プリスケーラ64
     TCCR2A = 0x12;
     OCR2A = 0;
 
     TIMSK1 = _BV(PCIE1);
     sei();
+
     for (;;) {
         wdt_reset();
     }
+
     return 0;
 }

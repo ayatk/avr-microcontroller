@@ -21,6 +21,7 @@ ISR(ADC_vect) {
     TIFR1 = _BV(OCF1B);	// トリガー用のフラグのクリア
     val = ADC;
     adc_flag = 1;
+
     if (adev == LED1) {	// LEDは光入力に鈍感なので，その対策
         DDRC |= 0x10;	// 出力ピンに変更
         PORTC &= ~0x10;	// 出力電圧を0Vにする(放電される)
@@ -31,6 +32,7 @@ ISR(ADC_vect) {
 ISR(USART_UDRE_vect) {
     static char n;
     UDR0 = buff[n++];
+
     if (buff[n] == '\0') {
         UCSR0B &= ~_BV(UDRIE0);	// 空き割り込み停止
         n = 0;
@@ -69,8 +71,10 @@ int main(void) {
     sei();
 
     int before_val = 0;
+
     for (;;) {
         wdt_reset();
+
         if (adc_flag) {
             // こんなのでいいのか...
             if (val >= before_val + 10) {
@@ -87,5 +91,6 @@ int main(void) {
             adc_flag = 0;
         }
     }
+
     return 0;
 }

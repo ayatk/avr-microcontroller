@@ -33,6 +33,7 @@ int main() {
         // Cleared Watch dog timer
         wdt_reset();
     }
+
     return 0;
 }
 

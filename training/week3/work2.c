@@ -117,11 +117,13 @@ void update_led();
 ISR(TIMER0_COMPA_vect) {
     static int cnt;
     cnt++;
+
     if (cnt == 125) {
         cnt = 0;
         count = (count == 9) ? 0 : count + 1;
         mv_flag = 1;    // 200msごとにセット
     }
+
     update_led();    // ダイナミックスキャン点灯
 }
 
@@ -157,14 +159,18 @@ int main() {
 
 
     sei();
+
     for (;;) {
         wdt_reset();
+
         if (mv_flag == 1) {
             mv_flag = 0;
             int i;
+
             for (n = 0; n <= 7; n++) show_led[n] = led[count][n];
         }
 
     }
+
     return 0;
 }

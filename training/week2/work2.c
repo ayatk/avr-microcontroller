@@ -44,13 +44,16 @@ int main() {
         cnt++;
 
         update_led();
+
         if (cnt >= CTOP) {
             cnt = 0;
             int i = 0;
+
             for (i = 0; i < 8; ++i) {
                 led[i] = (led[i] >> 1) | (led[i] << 7);
             }
         }
     }
+
     return 0;
 }
