@@ -44,11 +44,11 @@ void flash(void) {
     }
 }
 
-void user_init(void) {
+void init(void) {
     cursor_matrix[0] = 1;
 }
 
-void user_main(void) {
+void loop(void) {
     switch (sw) {
     case 1:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);

@@ -89,14 +89,14 @@ int main(void) {
     PCICR = _BV(PCIE1);
     PCMSK1 = 0x30;
 
-    user_init();    // ユーザ処理初期化
+    init();    // ユーザ処理初期化
     sei();          // システムとしての割り込みの有効化
 
     for (user_flag = 0;;) {
         wdt_reset();
 
         if (user_flag) {    //  ユーザー処理の起動
-            user_main();
+            loop();
             user_flag = 0;
         }
     }

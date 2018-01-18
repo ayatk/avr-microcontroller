@@ -27,6 +27,6 @@ extern volatile uchar sw;        //  押しボタン状態
 extern volatile uchar led[LED_SZ];    //  マトリクスLED
 
 /*	ユーザー定義	*/
-extern void user_init(void);
+extern void init(void);
 
-extern void user_main(void);
+extern void loop(void);
