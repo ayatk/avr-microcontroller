@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_LED_H_
-#define _OTHELLO_LED_H_
+#ifndef _OTHELLO_LIBS_LED_H_
+#define _OTHELLO_LIBS_LED_H_
 
 /**
  * LEDマトリックスのサイズ

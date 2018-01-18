@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_SWITCH_H_
-#define _OTHELLO_SWITCH_H_
+#ifndef _OTHELLO_LIBS_SWITCH_H_
+#define _OTHELLO_LIBS_SWITCH_H_
 
  /**
   * スイッチの状態を定義した列挙型

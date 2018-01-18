@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_LIB_H_
-#define _OTHELLO_LIB_H_
+#ifndef _OTHELLO_LIBS_APPLICATION_H_
+#define _OTHELLO_LIBS_APPLICATION_H_
 
 typedef unsigned char uchar;
 

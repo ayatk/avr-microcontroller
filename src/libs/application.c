@@ -1,11 +1,12 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
-#include "std/boolean.h"
+#include "../std/boolean.h"
 #include "led.h"
 #include "sound.h"
 #include "switch.h"
-#include "lib.h"
+#include "application.h"
+
 
 static volatile bool user_flag;    //  ユーザー処理の開始フラグ
 static volatile uchar delay;    //  待ち時間カウンタ

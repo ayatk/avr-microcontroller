@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_SOUND_H_
-#define _OTHELLO_SOUND_H_
+#ifndef _OTHELLO_LIBS_SOUND_H_
+#define _OTHELLO_LIBS_SOUND_H_
 
 /**
  * ブザーの音階

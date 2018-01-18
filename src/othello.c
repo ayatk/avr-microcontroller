@@ -1,8 +1,8 @@
 #include <math.h>
 #include <string.h>
-#include "lib.h"
-#include "led.h"
-#include "switch.h"
+#include "libs/application.h"
+#include "libs/led.h"
+#include "libs/switch.h"
 
 static uchar flash_count;
 
