@@ -12,6 +12,11 @@ enum {
 };
 
 /**
+ * スイッチの初期化処理
+ */
+void init_switch(void);
+
+/**
  * スイッチの状態を取得する関数
  *
  * @return スイッチのstate

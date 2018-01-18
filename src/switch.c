@@ -20,6 +20,15 @@ ISR(TIMER1_COMPA_vect) {
     TIMSK1 &= ~_BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み無効化
 }
 
+/**
+ * スイッチの初期化処理
+ */
+void init_switch(void) {
+    //  ピン変化割り込み有効
+    PCICR = _BV(PCIE1);
+    PCMSK1 = 0x30;
+}
+
 int get_switch_state(void) {
     return sw;
 }

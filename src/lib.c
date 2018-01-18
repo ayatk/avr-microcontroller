@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
+#include "switch.h"
 #include "lib.h"
 
 volatile uchar led[LED_SZ];        //  マトリクスLED
@@ -68,9 +69,8 @@ int main(void) {
     TIMSK1 |= _BV(OCIE1B);    // コンペアマッチB割り込み有効化(100ms)
     TCNT1 = 0xFFFF;
 
-    //  ピン変化割り込み有効
-    PCICR = _BV(PCIE1);
-    PCMSK1 = 0x30;
+    // 各種初期化処理
+    init_switch();
 
     init();    // ユーザ処理初期化
     sei();          // システムとしての割り込みの有効化
