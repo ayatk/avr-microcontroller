@@ -1,12 +1,13 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
+#include "std/boolean.h"
 #include "led.h"
 #include "switch.h"
 #include "lib.h"
 
 static volatile uchar period;    //  ブザー音の長さ
-static volatile uchar user_flag;    //  ユーザー処理の開始フラグ
+static volatile bool user_flag;    //  ユーザー処理の開始フラグ
 static volatile uchar delay;    //  待ち時間カウンタ
 static volatile uchar rnd;        //  擬似乱数のカウンタ
 
@@ -27,7 +28,7 @@ ISR(TIMER1_COMPB_vect) {
         }
     }
 
-    user_flag = 1;    // ユーザコードを呼び出す
+    user_flag = true;    // ユーザコードを呼び出す
 }
 
 int main(void) {
@@ -55,7 +56,7 @@ int main(void) {
     init();    // ユーザ処理初期化
     sei();          // システムとしての割り込みの有効化
 
-    for (user_flag = 0;;) {
+    for (user_flag = false;;) {
         wdt_reset();
 
         if (user_flag) {    //  ユーザー処理の起動
