@@ -16,6 +16,6 @@ enum {
  *
  * @return スイッチのstate
  */
-int GetSwitchState(void);
+int get_switch_state(void);
 
 #endif 

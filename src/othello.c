@@ -20,7 +20,7 @@ void reverse(uchar *array, uchar size) {
 }
 
 void flash(void) {
-    switch (GetSwitchState()) {
+    switch (get_switch_state()) {
     case SW_NONE:
         if (flash_count == 5) {
 
@@ -50,7 +50,7 @@ void init(void) {
 }
 
 void loop(void) {
-    switch (GetSwitchState()) {
+    switch (get_switch_state()) {
     case SW_LEFT:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);
         cursor_x = log10(cursor_matrix[cursor_y]) / log10(2);

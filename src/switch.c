@@ -20,6 +20,6 @@ ISR(TIMER1_COMPA_vect) {
     TIMSK1 &= ~_BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み無効化
 }
 
-int GetSwitchState(void) {
+int get_switch_state(void) {
     return sw;
 }
