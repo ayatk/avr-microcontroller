@@ -10,15 +10,15 @@ static u_char sw_flag;
 
 ISR(PCINT1_vect) {
     OCR1A = TCNT1 + 500;    // タイマ1に比較値設定(今から64ms後に割り込む)
-    TIFR1 = _BV(OCF1A);        // フラグクリア
-    TIMSK1 |= _BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み有効化
+    TIFR1 = _BV(OCF1A);     // フラグクリア
+    TIMSK1 |= _BV(OCIE1A);  // タイマ1・コンペアマッチA割り込み有効化
 }
 
 // チャタリング終了後，64ms後に呼び出される
 ISR(TIMER1_COMPA_vect) {
-    sw = (~PINC >> 4) & 3;    // スイッチ変数の更新
+    sw = (~PINC >> 4) & 3;  // スイッチ変数の更新
     sw_flag = 1;
-    TIMSK1 &= ~_BV(OCIE1A);    // タイマ1・コンペアマッチA割り込み無効化
+    TIMSK1 &= ~_BV(OCIE1A); // タイマ1・コンペアマッチA割り込み無効化
 }
 
 /**
