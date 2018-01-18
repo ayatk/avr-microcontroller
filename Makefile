@@ -7,11 +7,15 @@ W = 0
 # Exercise number
 E = 0
 
+# Libraries directory
+STDDIR := std
+LIBDIR := libs
+
 # Source files
 ifeq ($(W), 0)
-	SRCS = $(wildcard src/*.c)
+	SRCS := $(wildcard src/$(STDDIR)/*.c) $(wildcard src/$(LIBDIR)/*.c) $(wildcard src/*.c)
 else
-	SRCS = training/week$(W)/work$(E).c
+	SRCS := training/week$(W)/work$(E).c
 endif
 
 # Device name
