@@ -22,8 +22,6 @@ extern void _wait(uchar wait);    //  時間待ち
 extern uchar _rand(void);        //  擬似乱数生成
 extern void _sound(uchar tone, uchar length);    //  ブザー
 
-extern volatile uchar sw_flag;    // スイッチ変化を示すフラグ(クリアは手動)
-extern volatile uchar sw;        //  押しボタン状態
 extern volatile uchar led[LED_SZ];    //  マトリクスLED
 
 /*	ユーザー定義	*/
