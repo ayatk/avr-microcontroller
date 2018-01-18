@@ -1,11 +1,12 @@
 #include <math.h>
 #include <string.h>
 #include "lib.h"
+#include "led.h"
 #include "switch.h"
 
 static uchar flash_count;
 
-static uchar cursor_matrix[LED_SZ] = { 0 };
+static uchar cursor_matrix[LED_SIZE] = {0};
 static uchar cursor_x = 0;
 static uchar cursor_y = 0;
 
@@ -53,11 +54,11 @@ void loop(void) {
     switch (get_switch_state()) {
     case SW_LEFT:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);
-        cursor_x = log10(cursor_matrix[cursor_y]) / log10(2);
+        cursor_x = (uchar) (log10(cursor_matrix[cursor_y]) / log10(2));
         break;
 
     case SW_RIGHT:
-        cursor_y = (cursor_y == 7) ? 0 : cursor_y + 1;
+        cursor_y = (uchar) ( (cursor_y == 7) ? 0 : cursor_y + 1);
         reverse(cursor_matrix, 7);
         reverse(cursor_matrix, 8);
         break;
