@@ -1,6 +1,6 @@
 #include <math.h>
 #include <string.h>
-#include "user.h"
+#include "lib.h"
 
 static uchar flash_count;
 

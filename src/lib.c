@@ -1,7 +1,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
-#include "user.h"
+#include "lib.h"
 
 volatile uchar sw;                //  押しボタン状態
 volatile uchar sw_flag;            // スイッチ変化を示すフラグ(クリアはユーザ側で実施)
