@@ -3,10 +3,11 @@
 #include <avr/wdt.h>
 #include "std/boolean.h"
 #include "led.h"
+#include "sound.h"
 #include "switch.h"
 #include "lib.h"
 
-static volatile uchar period;    //  ブザー音の長さ
+
 static volatile bool user_flag;    //  ユーザー処理の開始フラグ
 static volatile uchar delay;    //  待ち時間カウンタ
 static volatile uchar rnd;        //  擬似乱数のカウンタ
@@ -20,13 +21,7 @@ ISR(TIMER1_COMPB_vect) {
         delay--;
     }
 
-    if (period) {    //  ブザー停止
-        period--;
-
-        if (period == 0) {
-            TCCR2A = 0;
-        }
-    }
+    sound_update();
 
     user_flag = true;    // ユーザコードを呼び出す
 }
@@ -39,10 +34,6 @@ int main(void) {
     PORTC = 0x30;    // 入力ピンをプルアップ
     PORTD = 0x00;
 
-    // タイマ2(CTC): ブザー用
-    TCCR2A = 0;
-    TCCR2B = 0x44;    //  1/64  , コンペアマッチ出力B有効（トグル）
-
     // タイマ1(ノーマル)：100msの定期割り込み
     TCCR1A = 0x00;
     TCCR1B = 0x05;
@@ -51,6 +42,7 @@ int main(void) {
 
     // 各種初期化処理
     init_switch();
+    init_sound();
     init_led();
 
     init();    // ユーザ処理初期化
@@ -79,11 +71,4 @@ void _wait(uchar n) {
 uchar _rand(void) {
     rnd++;    // 乱数更新
     return (uchar) (rnd ^ (rnd << 1));    // グレイコードカウンタ
-}
-
-/* ブザー */
-void _sound(uchar tone, uchar length) {
-    OCR2A = tone;
-    period = length;
-    TCCR2A = 0x12;
 }
