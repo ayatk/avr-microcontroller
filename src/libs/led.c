@@ -22,8 +22,8 @@ ISR(TIMER0_COMPA_vect) {
  */
 void init_led(void) {
     // タイマ0(CTC): ダイナミック点灯用
-    OCR0A = 249;    //  2mS
+    OCR0A = 25; // 100マイクロ秒
     TCCR0A = 2;
-    TCCR0B = 3;    //  1/64
+    TCCR0B = 2; // PS=32
     TIMSK0 |= (1 << OCIE0A); // コンペアマッチA割り込み有効
 }
