@@ -7,10 +7,9 @@
 #include "switch.h"
 #include "lib.h"
 
-
 static volatile bool user_flag;    //  ユーザー処理の開始フラグ
 static volatile uchar delay;    //  待ち時間カウンタ
-static volatile uchar rnd;        //  擬似乱数のカウンタ
+        //  擬似乱数のカウンタ
 
 /* ユーザ処理のための割り込み */
 ISR(TIMER1_COMPB_vect) {
@@ -61,14 +60,8 @@ int main(void) {
 }
 
 /* 時間待ち( n * 100ms) */
-void _wait(uchar n) {
-    for (delay = n; delay;) {
+void wait(uchar time) {
+    for (delay = time; delay;) {
         wdt_reset();
     }
-}
-
-/* 擬似乱数生成 */
-uchar _rand(void) {
-    rnd++;    // 乱数更新
-    return (uchar) (rnd ^ (rnd << 1));    // グレイコードカウンタ
 }

@@ -1,13 +1,24 @@
-
+#ifndef _OTHELLO_LIB_H_
+#define _OTHELLO_LIB_H_
 
 typedef unsigned char uchar;
 
-/*	システム定義		*/
-extern void _wait(uchar wait);    //  時間待ち
-extern uchar _rand(void);        //  擬似乱数生成
-extern void _sound(uchar tone, uchar length);    //  ブザー
+/**
+ * アプリケーションの初期化処理 
+ */
+void init(void);
 
-/*	ユーザー定義	*/
-extern void init(void);
+/**
+ * メインループ 
+ */
+void loop(void);
 
-extern void loop(void);
+/**
+ * 時間待ち
+ * 待ち時間は timeで指定した数に100msをかけたもの
+ * 
+ * @param time 待ち時間
+ */
+void wait(uchar time);
+
+#endif
