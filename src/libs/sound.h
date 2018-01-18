@@ -41,7 +41,7 @@ void init_sound(void);
  * @param tone ブザの音程
  * @param length 鳴らす長さ
  */
-void sound(unsigned char tone, unsigned char length);
+void sound(u_char tone, u_char length);
 
 /**
  * ブザーの状態を更新する処理

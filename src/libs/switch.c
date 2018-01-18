@@ -1,11 +1,12 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "../std/types.h"
 #include "switch.h"
 
 // 押しボタン状態
-static unsigned char sw;
+static u_char sw;
 // スイッチ変化を示すフラグ(クリアはユーザ側で実施)
-static unsigned char sw_flag;
+static u_char sw_flag;
 
 ISR(PCINT1_vect) {
     OCR1A = TCNT1 + 500;    // タイマ1に比較値設定(今から64ms後に割り込む)
@@ -29,6 +30,6 @@ void init_switch(void) {
     PCMSK1 = 0x30;
 }
 
-int get_switch_state(void) {
+u_char get_switch_state(void) {
     return sw;
 }

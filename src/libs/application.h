@@ -1,8 +1,6 @@
 #ifndef _OTHELLO_LIBS_APPLICATION_H_
 #define _OTHELLO_LIBS_APPLICATION_H_
 
-typedef unsigned char uchar;
-
 /**
  * アプリケーションの初期化処理 
  */
@@ -19,6 +17,6 @@ void loop(void);
  * 
  * @param time 待ち時間
  */
-void wait(uchar time);
+void wait(u_char time);
 
 #endif

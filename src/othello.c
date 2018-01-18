@@ -1,20 +1,21 @@
 #include <math.h>
 #include <string.h>
+#include "std/types.h"
 #include "libs/application.h"
 #include "libs/led.h"
 #include "libs/switch.h"
 
-static uchar flash_count;
+static u_char flash_count;
 
-static uchar cursor_matrix[LED_SIZE] = {0};
-static uchar cursor_x = 0;
-static uchar cursor_y = 0;
+static u_char cursor_matrix[LED_SIZE] = {0};
+static u_char cursor_x = 0;
+static u_char cursor_y = 0;
 
-void reverse(uchar *array, uchar size) {
-    uchar j;
+void reverse(u_char *array, u_char size) {
+    u_char j;
 
     for (j = 0; j < size / 2; j++) {
-        uchar t = array[j];
+        u_char t = array[j];
         array[j] = array[size - j - 1];
         array[size - j - 1] = t;
     }
@@ -54,11 +55,11 @@ void loop(void) {
     switch (get_switch_state()) {
     case SW_LEFT:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);
-        cursor_x = (uchar) (log10(cursor_matrix[cursor_y]) / log10(2));
+        cursor_x = (u_char) (log10(cursor_matrix[cursor_y]) / log10(2));
         break;
 
     case SW_RIGHT:
-        cursor_y = (uchar) ( (cursor_y == 7) ? 0 : cursor_y + 1);
+        cursor_y = (u_char) ( (cursor_y == 7) ? 0 : cursor_y + 1);
         reverse(cursor_matrix, 7);
         reverse(cursor_matrix, 8);
         break;

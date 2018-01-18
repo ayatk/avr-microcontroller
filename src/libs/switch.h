@@ -21,6 +21,6 @@ void init_switch(void);
  *
  * @return スイッチのstate
  */
-int get_switch_state(void);
+u_char get_switch_state(void);
 
 #endif 

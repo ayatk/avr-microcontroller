@@ -2,14 +2,15 @@
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
 #include "../std/boolean.h"
+#include "../std/types.h"
+#include "application.h"
 #include "led.h"
 #include "sound.h"
 #include "switch.h"
-#include "application.h"
 
 
 static volatile bool user_flag;    //  ユーザー処理の開始フラグ
-static volatile uchar delay;    //  待ち時間カウンタ
+static volatile u_char delay;    //  待ち時間カウンタ
         //  擬似乱数のカウンタ
 
 /* ユーザ処理のための割り込み */
@@ -61,7 +62,7 @@ int main(void) {
 }
 
 /* 時間待ち( n * 100ms) */
-void wait(uchar time) {
+void wait(u_char time) {
     for (delay = time; delay;) {
         wdt_reset();
     }

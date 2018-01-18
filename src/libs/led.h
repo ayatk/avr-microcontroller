@@ -9,7 +9,7 @@
 /**
  * マトリックスLED
  */
-volatile unsigned char led[LED_SIZE];
+volatile u_char led[LED_SIZE];
 
 /**
  * LEDの初期化処理
