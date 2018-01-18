@@ -49,8 +49,6 @@ void user_init(void) {
 }
 
 void user_main(void) {
-    flash();
-
     switch (sw) {
     case 1:
         cursor_matrix[cursor_y] = (cursor_matrix[cursor_y] << 1) | (cursor_matrix[cursor_y] >> 7);
@@ -63,4 +61,6 @@ void user_main(void) {
         reverse(cursor_matrix, 8);
         break;
     }
+
+    flash();
 }
