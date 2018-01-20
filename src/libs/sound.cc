@@ -8,7 +8,7 @@ void init_sound(void) {
     // タイマ2(CTC): ブザー用
     TCCR2A = 0;
     //  1/64  , コンペアマッチ出力B有効（トグル）
-    TCCR2B = 0x44;    
+    TCCR2B = 0x44;
 }
 
 void sound(u_char tone, u_char length) {

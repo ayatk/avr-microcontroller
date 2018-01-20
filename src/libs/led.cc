@@ -24,9 +24,10 @@ ISR (TIMER0_COMPA_vect) {
     for (i = 0; i < LED_SIZE; i++) {
         switch (led[scan][i]) {
         case LED_HALF:
+
             // 擬似乱数がグレイコードなので0x18ぐらいが
             // ちょうどいい点滅間隔
-            if (!(rand() & 0x18)) {   
+            if (!(rand() & 0x18)) {
                 _led[scan] |= 1 << i;
             }
 
