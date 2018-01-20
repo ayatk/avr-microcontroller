@@ -2,14 +2,14 @@
 #include "libs/application.h"
 #include "libs/led.h"
 
-volatile u_char led[LED_SIZE][LED_SIZE];
+volatile u_char Led::matrix[LED_SIZE][LED_SIZE];
 
-void init(void) {
-    led[3][3] = LED_ON;
-    led[4][4] = LED_ON;
-    led[3][4] = LED_HALF;
-    led[4][3] = LED_HALF;
+void init() {
+    Led::matrix[3][3] = Led::ON;
+    Led::matrix[4][4] = Led::ON;
+    Led::matrix[3][4] = Led::HALF;
+    Led::matrix[4][3] = Led::HALF;
 }
 
-void loop(void) {
+void loop() {
 }

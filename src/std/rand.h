@@ -5,6 +5,6 @@
  * 擬似乱数の生成
  * @return 乱数値
  */
-u_int rand(void);
+u_int rand();
 
 #endif

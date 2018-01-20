@@ -3,10 +3,12 @@
 #include "../std/types.h"
 #include "switch.h"
 
+namespace Switch {
+
 // 押しボタン状態
-static u_char sw;
+static u_char state;
 // スイッチ変化を示すフラグ(クリアはユーザ側で実施)
-static u_char sw_flag;
+static bool is_changed;
 
 ISR(PCINT1_vect) {
     OCR1A = TCNT1 + 500;    // タイマ1に比較値設定(今から64ms後に割り込む)
@@ -16,20 +18,22 @@ ISR(PCINT1_vect) {
 
 // チャタリング終了後，64ms後に呼び出される
 ISR(TIMER1_COMPA_vect) {
-    sw = (~PINC >> 4) & 3;  // スイッチ変数の更新
-    sw_flag = 1;
+    state = (~PINC >> 4) & 3;  // スイッチ変数の更新
+    is_changed = true;
     TIMSK1 &= ~_BV(OCIE1A); // タイマ1・コンペアマッチA割り込み無効化
 }
 
 /**
  * スイッチの初期化処理
  */
-void init_switch(void) {
+void init() {
     //  ピン変化割り込み有効
     PCICR = _BV(PCIE1);
     PCMSK1 = 0x30;
 }
 
-u_char get_switch_state(void) {
-    return sw;
+u_char getState() {
+    return state;
+}
+
 }

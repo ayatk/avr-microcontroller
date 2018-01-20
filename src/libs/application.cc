@@ -20,12 +20,12 @@ ISR(TIMER1_COMPB_vect) {
         delay--;
     }
 
-    sound_update();
+    Sound::update();
 
     user_flag = true;   // ユーザコードを呼び出す
 }
 
-int main(void) {
+int main() {
     // LED,スイッチ,ブザーのポート設定
     DDRB = 0xFF;
     DDRC = 0x0F;
@@ -40,9 +40,9 @@ int main(void) {
     TCNT1 = 0xFFFF;
 
     // 各種初期化処理
-    init_switch();
-    init_sound();
-    init_led();
+    Switch::init();
+    Sound::init();
+    Led::init();
 
     init(); // ユーザ処理初期化
     sei();  // システムとしての割り込みの有効化

@@ -1,34 +1,40 @@
-#ifndef _OTHELLO_LIBS_LED_H_
-#define _OTHELLO_LIBS_LED_H_
+#ifndef OTHELLO_LIBS_LED_H
+#define OTHELLO_LIBS_LED_H
 
 /**
  * LEDマトリックスのサイズ
  */
 #define LED_SIZE 8
 
+namespace Led {
+
 /**
  * LEDのstate 
  */
 enum {
-    LED_ON,
-    LED_HALF,   // 半分だけ点灯させる
-    LED_OFF
+    ON,
+    HALF,   // 半分だけ点灯させる
+    OFF
 };
 
 /**
  * マトリックスLED
  */
-volatile u_char led[LED_SIZE][LED_SIZE];
+extern volatile u_char matrix[LED_SIZE][LED_SIZE];
+
+
 
 /**
  * LEDの初期化処理
  */
-void init_led(void);
+void init();
 
 /**
  * LEDを全てOFFにする
  */
-void reset_led(void);
+void reset();
+
+}
 
 #endif 
 

@@ -1,26 +1,30 @@
 #ifndef _OTHELLO_LIBS_SWITCH_H_
 #define _OTHELLO_LIBS_SWITCH_H_
 
+namespace Switch {
+
  /**
   * スイッチの状態を定義した列挙型
   */
 enum {
-    SW_NONE = 0,
-    SW_LEFT = 1,
-    SW_RIGHT = 2,
-    SW_BOTH = 3
+    NONE,
+    LEFT,
+    RIGHT,
+    BOTH
 };
 
 /**
  * スイッチの初期化処理
  */
-void init_switch(void);
+void init();
 
 /**
  * スイッチの状態を取得する関数
  *
  * @return スイッチのstate
  */
-u_char get_switch_state(void);
+u_char getState();
+
+}
 
 #endif 

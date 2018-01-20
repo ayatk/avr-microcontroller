@@ -4,12 +4,12 @@
 /**
  * アプリケーションの初期化処理 
  */
-void init(void);
+void init();
 
 /**
  * メインループ 
  */
-void loop(void);
+void loop();
 
 /**
  * 時間待ち
@@ -17,6 +17,6 @@ void loop(void);
  * 
  * @param time 待ち時間
  */
-void wait(u_char time);
+void wait(u_char time = 0);
 
 #endif
