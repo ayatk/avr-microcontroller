@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_STD_BOOL_H_
-#define _OTHELLO_STD_BOOL_H_
+#ifndef OTHELLO_STD_BOOL_H
+#define OTHELLO_STD_BOOL_H
 
 /**
  * 擬似乱数の生成

@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_LIBS_SOUND_H_
-#define _OTHELLO_LIBS_SOUND_H_
+#ifndef OTHELLO_LIBS_SOUND_H
+#define OTHELLO_LIBS_SOUND_H
 
 namespace Sound {
 

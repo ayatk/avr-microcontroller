@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_STD_TYPES_H
-#define _OTHELLO_STD_TYPES_H
+#ifndef OTHELLO_STD_TYPES_H
+#define OTHELLO_STD_TYPES_H
 
 /**
  * unsigned charのType Alias

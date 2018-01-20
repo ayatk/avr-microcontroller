@@ -1,5 +1,5 @@
-#ifndef _OTHELLO_LIBS_SWITCH_H_
-#define _OTHELLO_LIBS_SWITCH_H_
+#ifndef OTHELLO_LIBS_SWITCH_H
+#define OTHELLO_LIBS_SWITCH_H
 
 namespace Switch {
 
