@@ -1,7 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
-#include "../std/boolean.h"
 #include "../std/types.h"
 #include "application.h"
 #include "led.h"
