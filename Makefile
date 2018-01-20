@@ -52,7 +52,7 @@ LDFLAGS = -mmcu=$(MPU) -Wl,-Map=$(MAPFILE)
 all: clean $(HEXFILE)
 
 $(HEXFILE):	$(OBJECTS)
-	avr-gcc $(LDFLAGS) $(OBJECTS) -o $(ELFFILE)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $(ELFFILE)
 	avr-objcopy -j.text -j.data -O ihex $(ELFFILE) $(HEXFILE)
 	avr-objcopy -j.eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings -O ihex $(ELFFILE) $(EEPFILE)
 	avr-objdump -h -S $(ELFFILE) > $(LSSFILE)
