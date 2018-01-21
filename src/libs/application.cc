@@ -61,7 +61,7 @@ int main() {
 
         if (user_flag) {    //  ユーザー処理の起動
             loop();
-            user_flag = 0;
+            user_flag = false;
         }
     }
 
