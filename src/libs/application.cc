@@ -12,10 +12,9 @@
 #include <avr/wdt.h>
 #include "../std/types.h"
 #include "application.h"
-#include "led.h"
 #include "sound.h"
 #include "switch.h"
-
+#include "../board.h"
 
 static volatile bool user_flag; //  ユーザー処理の開始フラグ
 static volatile u_char delay;   //  待ち時間カウンタ
@@ -51,7 +50,7 @@ int main() {
     // 各種初期化処理
     Switch::init();
     Sound::init();
-    Led::init();
+    Board::init();
 
     init(); // ユーザ処理初期化
     sei();  // システムとしての割り込みの有効化

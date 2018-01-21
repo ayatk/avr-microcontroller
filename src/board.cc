@@ -1,10 +1,22 @@
+/*
+ * Othello
+ *
+ * Copyright (c) 2017-2018 ayatk.
+ *
+ * This software is released under the MIT License.
+ * https://opensource.org/licenses/MIT
+ */
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "../std/types.h"
-#include "../std/rand.h"
-#include "led.h"
+#include "std/types.h"
+#include "std/rand.h"
+#include "board.h"
+#include "player.h"
 
-namespace Led {
+namespace Board {
+
+Color matrix[LED_SIZE][LED_SIZE];
 
 // 表示用
 static u_char _led[LED_SIZE];
@@ -24,8 +36,12 @@ ISR (TIMER0_COMPA_vect) {
     _led[scan] = 0; // LEDを綺麗にする
 
     for (i = 0; i < LED_SIZE; i++) {
+        if (scan == Player::getY() && Player::getX() == i) {
+            _led[scan] |= 1 << i;
+        }
+
         switch (matrix[scan][i]) {
-        case HALF:
+        case BLACK:
 
             // 擬似乱数がグレイコードなので0x18ぐらいが
             // ちょうどいい点滅間隔
@@ -35,10 +51,11 @@ ISR (TIMER0_COMPA_vect) {
 
             break;
 
-        case ON:
+        case WHITE:
             _led[scan] |= 1 << i;
             break;
         }
+
     }
 
     PORTB = _led[scan];
@@ -54,7 +71,7 @@ void init() {
     TCCR0B = 2; // PS=32
     TIMSK0 |= (1 << OCIE0A); // コンペアマッチA割り込み有効
 
-    Led::reset();
+    reset();
 }
 
 /**
@@ -65,11 +82,16 @@ void reset() {
 
     for (i = 0; i < LED_SIZE; i++) {
         for (j = 0; j < LED_SIZE; j++) {
-            matrix[i][j] = OFF;
+            matrix[i][j] = NONE;
         }
 
         _led[i] = 0;
     }
+
+    matrix[3][3] = WHITE;
+    matrix[4][4] = WHITE;
+    matrix[3][4] = BLACK;
+    matrix[4][3] = BLACK;
 }
 
 }

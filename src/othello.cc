@@ -9,16 +9,36 @@
 
 #include "std/types.h"
 #include "libs/application.h"
-#include "libs/led.h"
+#include "libs/switch.h"
+#include "player.h"
+#include "board.h"
+#include "othello.h"
 
-volatile u_char Led::matrix[LED_SIZE][LED_SIZE];
 
 void init() {
-    Led::matrix[3][3] = Led::ON;
-    Led::matrix[4][4] = Led::ON;
-    Led::matrix[3][4] = Led::HALF;
-    Led::matrix[4][3] = Led::HALF;
+    Board::reset();
+    Player::init(0, 0, true);
 }
 
 void loop() {
+    Othello::play();
+}
+
+namespace Othello {
+
+void play() {
+    switch (Switch::getState()) {
+    case Switch::LEFT:
+        Player::cursorMoveLeft();
+        break;
+
+    case Switch::RIGHT:
+        Player::cursorMoveDown();
+        break;
+
+    case Switch::BOTH:
+        break;
+    }
+}
+
 }
