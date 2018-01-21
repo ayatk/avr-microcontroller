@@ -16,6 +16,7 @@ namespace Switch {
   * スイッチの状態を定義した列挙型
   */
 enum {
+enum State {
     NONE,
     LEFT,
     RIGHT,
@@ -32,7 +33,7 @@ void init();
  *
  * @return スイッチのstate
  */
-u_char getState();
+State getState();
 
 }
 

@@ -15,7 +15,7 @@
 namespace Switch {
 
 // 押しボタン状態
-static u_char state;
+static State state;
 // スイッチ変化を示すフラグ(クリアはユーザ側で実施)
 static bool is_changed;
 
@@ -27,7 +27,7 @@ ISR(PCINT1_vect) {
 
 // チャタリング終了後，64ms後に呼び出される
 ISR(TIMER1_COMPA_vect) {
-    state = (~PINC >> 4) & 3;  // スイッチ変数の更新
+    state = static_cast<State>((~PINC >> 4) & 3);  // スイッチ変数の更新
     is_changed = true;
     TIMSK1 &= ~_BV(OCIE1A); // タイマ1・コンペアマッチA割り込み無効化
 }
@@ -41,7 +41,7 @@ void init() {
     PCMSK1 = 0x30;
 }
 
-u_char getState() {
+State getState() {
     return state;
 }
 
