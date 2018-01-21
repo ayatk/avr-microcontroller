@@ -12,10 +12,9 @@
 
 namespace Switch {
 
- /**
-  * スイッチの状態を定義した列挙型
-  */
-enum {
+/**
+ * スイッチの状態を定義した列挙型
+ */
 enum State {
     NONE,
     LEFT,
