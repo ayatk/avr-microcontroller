@@ -7,13 +7,16 @@ W = 0
 # Exercise number
 E = 0
 
+# Work directory
+WORKDIR := othello
+
 # Libraries directory
 STDDIR := std
 LIBDIR := libs
 
 # Source files
 ifeq ($(W), 0)
-	SRCS := $(wildcard src/$(STDDIR)/*.cc) $(wildcard src/$(LIBDIR)/*.cc) $(wildcard src/*.cc)
+	SRCS := $(wildcard $(WORKDIR)/$(STDDIR)/*.cc) $(wildcard $(WORKDIR)/$(LIBDIR)/*.cc) $(wildcard $(WORKDIR)/*.cc)
 else
 	SRCS := training/week$(W)/work$(E).cc
 endif
