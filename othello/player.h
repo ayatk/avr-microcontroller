@@ -18,7 +18,7 @@ struct Cursor {
     u_char y:4;
 };
 
-void init(u_char x, u_char y, bool player_turn);
+void init(Cursor cursor, bool player_turn = true);
 
 u_char getX();
 

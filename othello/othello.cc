@@ -17,7 +17,7 @@
 
 void init() {
     Board::reset();
-    Player::init(0, 0, true);
+    Player::init(Player::Cursor {0, 0}, true);
 }
 
 void loop() {

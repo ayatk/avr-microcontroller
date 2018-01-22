@@ -16,9 +16,8 @@ Cursor cursor;
 bool player_turn;
 
 /// 初期化
-void init(u_char x, u_char y, bool _player_turn) {
-    cursor.x = x;
-    cursor.y = y;
+void init(Cursor _cursor, bool _player_turn) {
+    cursor = _cursor;
     player_turn = _player_turn;
 }
 
