@@ -14,6 +14,8 @@ namespace Othello {
 
 void play();
 
+void reset();
+
 }
 
 #endif

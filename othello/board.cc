@@ -87,11 +87,6 @@ void reset() {
 
         _led[i] = 0;
     }
-
-    matrix[3][3] = WHITE;
-    matrix[4][4] = WHITE;
-    matrix[3][4] = BLACK;
-    matrix[4][3] = BLACK;
 }
 
 }

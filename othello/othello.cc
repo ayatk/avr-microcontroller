@@ -17,6 +17,7 @@
 
 void init() {
     Board::reset();
+    Othello::reset();
     Player::init(Player::Cursor {0, 0}, true);
 }
 
@@ -39,6 +40,13 @@ void play() {
     case Switch::BOTH:
         break;
     }
+}
+
+void reset() {
+    Board::matrix[3][3] = Board::WHITE;
+    Board::matrix[4][4] = Board::WHITE;
+    Board::matrix[3][4] = Board::BLACK;
+    Board::matrix[4][3] = Board::BLACK;
 }
 
 }
