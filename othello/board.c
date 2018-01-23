@@ -9,6 +9,7 @@
 
 #include <avr/interrupt.h>
 #include "std/types.h"
+#include "std/booliean.h"
 #include "std/rand.h"
 #include "board.h"
 #include "player.h"
