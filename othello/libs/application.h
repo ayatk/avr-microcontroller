@@ -26,6 +26,6 @@ void loop();
  * 
  * @param time 待ち時間
  */
-void wait(u_char time = 0);
+void wait(u_char time);
 
 #endif

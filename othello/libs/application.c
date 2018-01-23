@@ -11,6 +11,7 @@
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
 #include "../std/types.h"
+#include "../std/booliean.h"
 #include "application.h"
 #include "sound.h"
 #include "switch.h"
@@ -28,7 +29,7 @@ ISR(TIMER1_COMPB_vect) {
         delay--;
     }
 
-    Sound::update();
+    sound_update();
 
     user_flag = true;   // ユーザコードを呼び出す
 }
@@ -48,9 +49,9 @@ int main() {
     TCNT1 = 0xFFFF;
 
     // 各種初期化処理
-    Switch::init();
-    Sound::init();
-    Board::init();
+    switch_init();
+    sound_init();
+    board_init();
 
     init(); // ユーザ処理初期化
     sei();  // システムとしての割り込みの有効化

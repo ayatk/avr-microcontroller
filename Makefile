@@ -16,9 +16,9 @@ LIBDIR := libs
 
 # Source files
 ifeq ($(W), 0)
-	SRCS := $(wildcard $(WORKDIR)/$(STDDIR)/*.cc) $(wildcard $(WORKDIR)/$(LIBDIR)/*.cc) $(wildcard $(WORKDIR)/*.cc)
+	SRCS := $(wildcard $(WORKDIR)/$(STDDIR)/*.c) $(wildcard $(WORKDIR)/$(LIBDIR)/*.c) $(wildcard $(WORKDIR)/*.c)
 else
-	SRCS := training/week$(W)/work$(E).cc
+	SRCS := training/week$(W)/work$(E).c
 endif
 
 # Device name
@@ -35,8 +35,8 @@ OUT_DIR = build
 
 WORK_DIR = $(OUT_DIR)/$(PROJECT)
 
-# OBJECTS = $(SRCS:.cc=.o)
-OBJECTS = $(patsubst %.cc,$(OUT_DIR)/%.o,$(SRCS))
+# OBJECTS = $(SRCS:.c=.o)
+OBJECTS = $(patsubst %.c,$(OUT_DIR)/%.o,$(SRCS))
 MPU = atmega88pa
 F_CPU = 8000000UL
 
@@ -46,7 +46,7 @@ ELFFILE = $(WORK_DIR).elf
 HEXFILE = $(WORK_DIR).hex
 EEPFILE = $(WORK_DIR).eep
 
-CC = avr-g++
+CC = avr-gcc
 CFLAGS = -mmcu=$(MPU) -W -Wall -Werror-implicit-function-declaration -DF_CPU=$(F_CPU) -Os -g2
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -fdiagnostics-color
@@ -69,6 +69,6 @@ dl:	all
 clean:
 	/bin/rm -fr $(OUT_DIR) ./a.out **/*.[iso] *~
 
-$(OUT_DIR)/%.o: %.cc
+$(OUT_DIR)/%.o: %.c
 	@if [ ! -e `dirname $@` ]; then mkdir -p `dirname $@`; fi
 	$(CC) -c $< -o $@ $(CFLAGS)

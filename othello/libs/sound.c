@@ -11,11 +11,9 @@
 #include "../std/types.h"
 #include "sound.h"
 
-namespace Sound {
-
 static u_char period;
 
-void init() {
+void sound_init() {
     // タイマ2(CTC): ブザー用
     TCCR2A = 0;
     //  1/64  , コンペアマッチ出力B有効（トグル）
@@ -28,12 +26,10 @@ void beep(u_char tone, u_char length) {
     TCCR2A = 0x12;
 }
 
-void update() {
+void sound_update() {
     if (period) {
         if (--period == 0) {
             TCCR2A = 0;
         }
     }
-}
-
 }

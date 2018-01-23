@@ -10,24 +10,14 @@
 #ifndef OTHELLO_PLAYER_H
 #define OTHELLO_PLAYER_H
 
+void player_init(u_char x, u_char y, _Bool _player_turn);
 
-namespace Player {
+u_char player_get_x();
 
-struct Cursor {
-    u_char x:4;
-    u_char y:4;
-};
+u_char player_get_y();
 
-void init(Cursor cursor, bool player_turn = true);
+void cursor_move_left();
 
-u_char getX();
-
-u_char getY();
-
-void cursorMoveLeft();
-
-void cursorMoveDown();
-
-}
+void cursor_move_down();
 
 #endif

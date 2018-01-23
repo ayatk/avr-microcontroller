@@ -15,8 +15,6 @@
  */
 #define LED_SIZE 8
 
-namespace Board {
-
 /**
  * LEDのstate 
  */
@@ -29,20 +27,18 @@ enum Color {
 /**
  * マトリックスLED
  */
-extern Color matrix[LED_SIZE][LED_SIZE];
+extern u_char matrix[LED_SIZE][LED_SIZE];
 
 
 /**
  * LEDの初期化処理
  */
-void init();
+void board_init();
 
 /**
  * LEDを全てOFFにする
  */
-void reset();
-
-}
+void board_reset();
 
 #endif 
 

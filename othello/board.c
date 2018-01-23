@@ -7,19 +7,17 @@
  * https://opensource.org/licenses/MIT
  */
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "std/types.h"
 #include "std/rand.h"
 #include "board.h"
 #include "player.h"
 
-namespace Board {
-
-Color matrix[LED_SIZE][LED_SIZE];
 
 // 表示用
 static u_char _led[LED_SIZE];
+
+u_char matrix[LED_SIZE][LED_SIZE];
 
 /* マトリクスLEDのダイナミック点灯(2ms毎) */
 ISR (TIMER0_COMPA_vect) {
@@ -36,7 +34,7 @@ ISR (TIMER0_COMPA_vect) {
     _led[scan] = 0; // LEDを綺麗にする
 
     for (i = 0; i < LED_SIZE; i++) {
-        if (scan == Player::getY() && Player::getX() == i) {
+        if (scan == player_get_y() && player_get_x() == i) {
             _led[scan] |= 1 << i;
         }
 
@@ -64,20 +62,20 @@ ISR (TIMER0_COMPA_vect) {
 /**
  * LEDの初期化処理
  */
-void init() {
+void board_init() {
     // タイマ0(CTC): ダイナミック点灯用
     OCR0A = 25; // 100マイクロ秒
     TCCR0A = 2;
     TCCR0B = 2; // PS=32
     TIMSK0 |= (1 << OCIE0A); // コンペアマッチA割り込み有効
 
-    reset();
+    board_reset();
 }
 
 /**
  * LEDを全てOFFにする
  */
-void reset() {
+void board_reset() {
     u_char i, j;
 
     for (i = 0; i < LED_SIZE; i++) {
@@ -89,4 +87,3 @@ void reset() {
     }
 }
 
-}

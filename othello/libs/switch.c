@@ -10,12 +10,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "../std/types.h"
-#include "switch.h"
+#include "../std/booliean.h"
 
-namespace Switch {
 
 // 押しボタン状態
-static State state;
+static u_char state;
 // スイッチ変化を示すフラグ(クリアはユーザ側で実施)
 static bool is_changed;
 
@@ -27,7 +26,7 @@ ISR(PCINT1_vect) {
 
 // チャタリング終了後，64ms後に呼び出される
 ISR(TIMER1_COMPA_vect) {
-    state = static_cast<State>((~PINC >> 4) & 3);  // スイッチ変数の更新
+    state = (~PINC >> 4) & 3;  // スイッチ変数の更新
     is_changed = true;
     TIMSK1 &= ~_BV(OCIE1A); // タイマ1・コンペアマッチA割り込み無効化
 }
@@ -35,14 +34,12 @@ ISR(TIMER1_COMPA_vect) {
 /**
  * スイッチの初期化処理
  */
-void init() {
+void switch_init() {
     //  ピン変化割り込み有効
     PCICR = _BV(PCIE1);
     PCMSK1 = 0x30;
 }
 
-State getState() {
+u_char get_switch_state() {
     return state;
-}
-
 }

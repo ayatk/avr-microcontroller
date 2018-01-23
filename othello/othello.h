@@ -10,12 +10,8 @@
 #ifndef OTHELLO_H
 #define OTHELLO_H
 
-namespace Othello {
+void othello_play();
 
-void play();
-
-void reset();
-
-}
+void othello_reset();
 
 #endif
