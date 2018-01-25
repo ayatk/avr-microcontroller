@@ -10,35 +10,17 @@
 #ifndef OTHELLO_BOARD_H
 #define OTHELLO_BOARD_H
 
-/**
- * LEDマトリックスのサイズ
- */
 #define LED_SIZE 8
+#define NONE 6
+#define WHITE 1
+#define BLACK 5
 
-/**
- * LEDのstate 
- */
-enum Color {
-    WHITE,
-    BLACK, // 半分だけ点灯させる
-    NONE,
-};
-
-/**
- * マトリックスLED
- */
-extern u_char matrix[LED_SIZE][LED_SIZE];
-
-
-/**
- * LEDの初期化処理
- */
 void board_init();
 
-/**
- * LEDを全てOFFにする
- */
 void board_reset();
 
-#endif 
+volatile int matrix[LED_SIZE][LED_SIZE];
 
+void cursor_visible(bool enable);
+
+#endif

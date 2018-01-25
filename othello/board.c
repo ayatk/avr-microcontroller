@@ -7,84 +7,75 @@
  * https://opensource.org/licenses/MIT
  */
 
+#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "std/types.h"
 #include "std/booliean.h"
-#include "std/rand.h"
 #include "board.h"
 #include "player.h"
 
+volatile int count;
+volatile u_char led[LED_SIZE];
+static volatile u_char scan;
 
-// 表示用
-static u_char _led[LED_SIZE];
+static volatile bool display_target = false;
 
-u_char matrix[LED_SIZE][LED_SIZE];
+ISR(TIMER1_COMPA_vect) {
+    u_char sc;
+    int x;
+    PORTB = 0; // led表示初期化
+    scan = (scan + 1) & 7;
+    sc = ~(1 << scan);
+    led[scan] = 0; // led表示初期化
+    PORTC = 0x30 | (sc & 0x0f);// スイッチ用のプルアップを兼ねる
+    PORTD = sc & 0xf0;
 
-/* マトリクスLEDのダイナミック点灯(2ms毎) */
-ISR (TIMER0_COMPA_vect) {
-    static u_char sc = 0xFE;
-    static u_char scan = 0; //  LED 走査カウンタ
-    u_char i;
+    // LED_OFF以外の間隔で転倒するためのカウンタ
+    count = (count >= NONE - 1) ? 1 : count + 1;
 
-    // LEDの更新
-    PORTB = 0;    // 残像対策
-    sc = (sc << 1) | (sc >> 7);
-    PORTD = (PORTD & 0x0F) | (sc & 0xF0);   // 上位4ビット書き換え
-    PORTC = (PORTC & 0xF0) | (sc & 0x0F);   // 下位4ビット書き換え
-    scan = (u_char) ((scan + 1) & 7);
-    _led[scan] = 0; // LEDを綺麗にする
+    for (x = 0; x < LED_SIZE; x++) {
+        int timing = 1;
 
-    for (i = 0; i < LED_SIZE; i++) {
-        if (scan == player_get_y() && player_get_x() == i) {
-            _led[scan] |= 1 << i;
+        // ターゲットのいる場所をONかOFFにする
+        if (display_target == 1 && scan == LED_SIZE - get_cursor_y() - 1 && get_cursor_x() == x) {
+            timing = is_cursor_flash();
+        } else {
+            timing = matrix[LED_SIZE - scan - 1][x];
         }
 
-        switch (matrix[scan][i]) {
-        case BLACK:
-
-            // 擬似乱数がグレイコードなので0x18ぐらいが
-            // ちょうどいい点滅間隔
-            if (!(rand() & 0x18)) {
-                _led[scan] |= 1 << i;
-            }
-
-            break;
-
-        case WHITE:
-            _led[scan] |= 1 << i;
-            break;
+        if (count % timing == 0) {
+            u_char temp = 1 << (LED_SIZE - x - 1);
+            led[scan] |= temp;
         }
-
     }
 
-    PORTB = _led[scan];
+    PORTB = led[scan];
 }
 
-/**
- * LEDの初期化処理
- */
 void board_init() {
-    // タイマ0(CTC): ダイナミック点灯用
-    OCR0A = 25; // 100マイクロ秒
-    TCCR0A = 2;
-    TCCR0B = 2; // PS=32
-    TIMSK0 |= (1 << OCIE0A); // コンペアマッチA割り込み有効
-
+    int x, y;
+    count = 0;
     board_reset();
+
+    // LED捜査用のタイマカウンタ
+    TCCR1A = 0;
+    TCCR1B = 0b00001010; // CTCモード(OCR1A), PS=8
+    OCR1A = 500;
+    TIMSK1 |= (1 << OCIE1A);
 }
 
-/**
- * LEDを全てOFFにする
- */
 void board_reset() {
-    u_char i, j;
+    int x, y;
 
-    for (i = 0; i < LED_SIZE; i++) {
-        for (j = 0; j < LED_SIZE; j++) {
-            matrix[i][j] = NONE;
+    for (y = 0; y < LED_SIZE; y++) {
+        for (x = 0; x < LED_SIZE; x++) {
+            matrix[y][x] = NONE;
         }
 
-        _led[i] = 0;
+        led[y] = 0;
     }
 }
 
+void cursor_visible(bool enable) {
+    display_target = enable;
+}

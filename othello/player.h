@@ -10,14 +10,27 @@
 #ifndef OTHELLO_PLAYER_H
 #define OTHELLO_PLAYER_H
 
-void player_init(u_char x, u_char y, bool _player_turn);
+enum {
+    PLAYER,
+    AI,
+};
 
-u_char player_get_x();
+void target_init(int x, int y, int p1, int p2);
 
-u_char player_get_y();
+int get_cursor_x();
+
+int get_cursor_y();
+
+int is_cursor_flash();
 
 void cursor_move_left();
 
 void cursor_move_down();
+
+int get_player_turn();
+
+void next_turn();
+
+void target_reverse_state();
 
 #endif

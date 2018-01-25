@@ -10,37 +10,65 @@
 #include "std/types.h"
 #include "std/booliean.h"
 #include "player.h"
+#include "board.h"
 
-typedef struct Cursor {
-    u_char x: 4;
-    u_char y: 4;
-} Cursor;
+/** プレイヤーの操作に関する構造体 */
+typedef struct TARGET {
+    int x, y;
+    int state;
+    int turn;
+} TARGET;
 
+/** プレイヤーの操作に関する変数 */
+static TARGET target;
+static volatile int player1;
+static volatile int player2;
 
-Cursor cursor;
-bool player_turn;
-
-/// 初期化
-void player_init(u_char x, u_char y, bool _player_turn) {
-    cursor.x = x;
-    cursor.y = y;
-    player_turn = _player_turn;
+/** ターゲットの初期化 */
+void target_init(int x, int y, int p1, int p2) {
+    target.x = x;
+    target.y = y;
+    player1 = p1;
+    player2 = p2;
+    target.state = target.turn = p1;
 }
 
-u_char player_get_x() {
-    return cursor.x;
+/** ターゲットの現在地 */
+int get_cursor_x() {
+    return target.x;
 }
 
-u_char player_get_y() {
-    return cursor.y;
+int get_cursor_y() {
+    return target.y;
 }
 
+/** ターゲットの点滅状態 */
+int is_cursor_flash() {
+    return target.state;
+}
+
+/* ターゲットを左に移動させる処理 */
 void cursor_move_left() {
-    cursor.x = (u_char) ((cursor.x + 1) & 7);
+    target.x = (u_char) ((target.x + 1) & 7);
 }
 
+/** ターゲットを下に移動させる処理 */
 void cursor_move_down() {
-    cursor.y = (u_char) ((cursor.y + 1) & 7);
+    target.y = (target.y < 7) ? target.y + 1 : 0;
 }
 
+/** 現在誰の番なのかを取得 */
+int get_player_turn() {
+    return target.turn;
+}
+
+/** 次の人へ */
+void next_turn() {
+    target.turn = (target.turn == player1) ? player2 : player1;
+}
+
+/** ターゲットの点滅状態を反転 */
+void target_reverse_state() {
+    target.state = (target.state == target.turn) ? NONE : target.turn;
+}
 
