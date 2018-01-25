@@ -57,7 +57,7 @@ void sound_init();
  * @param tone ブザの音程
  * @param length 鳴らす長さ
  */
-void beep(u_char tone, u_char length);
+void beep(int tone, int length);
 
 /**
  * ブザーの状態を更新する処理

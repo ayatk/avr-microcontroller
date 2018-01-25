@@ -12,7 +12,7 @@
 #include "../std/booliean.h"
 #include "sound.h"
 
-static u_char period;
+static int period;
 
 void sound_init() {
     // タイマ2(CTC): ブザー用
@@ -21,7 +21,7 @@ void sound_init() {
     TCCR2B = 0x44;
 }
 
-void beep(u_char tone, u_char length) {
+void beep(int tone, int length) {
     OCR2A = tone;
     period = length;
     TCCR2A = 0x12;
