@@ -42,40 +42,18 @@ void put_stone(int x, int y, int turn) {
 }
 
 bool can_put_stone(int x, int y, int turn) {
+    int vertical, horizontal;
+
     if (matrix[y][x] != NONE) {
         return false;
     }
 
-    if (count_turn_over(turn, y, x, -1, 0)) {
-        return true;    // 上
-    }
-
-    if (count_turn_over(turn, y, x, 1, 0)) {
-        return true;    // 下
-    }
-
-    if (count_turn_over(turn, y, x, 0, -1)) {
-        return true;    // 左
-    }
-
-    if (count_turn_over(turn, y, x, 0, 1)) {
-        return true;    // 右
-    }
-
-    if (count_turn_over(turn, y, x, -1, -1)) {
-        return true;    // 左上
-    }
-
-    if (count_turn_over(turn, y, x, -1, 1)) {
-        return true;    // 右上
-    }
-
-    if (count_turn_over(turn, y, x, 1, -1)) {
-        return true;    // 左下
-    }
-
-    if (count_turn_over(turn, y, x, 1, 1)) {
-        return true;    // 右下
+    for (vertical = -1; vertical <= 1; vertical++) {      // 上下方向
+        for (horizontal = -1; horizontal <= 1; horizontal++) {  // 左右方向
+            if (count_turn_over(turn, y, x, vertical, horizontal)) {
+                return true;
+            }
+        }
     }
 
     return false;
