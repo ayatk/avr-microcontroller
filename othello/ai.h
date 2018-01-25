@@ -10,6 +10,11 @@
 #ifndef OTHELLO_AI_H_
 #define OTHELLO_AI_H_
 
+/**
+ * オセロのAI
+ * @param turn 石の色
+ * @return
+ */
 int ai(int turn);
 
 #endif

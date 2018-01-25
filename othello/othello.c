@@ -20,51 +20,17 @@
 #include "judgment.h"
 #include "ai.h"
 
-
-/** 勝利した時にならすBGM */
-static struct CODE win[] = {
-    BEEP_END, 3,
-    BEEP_E4, 2,
-    BEEP_END, 0,
-    BEEP_E4, 2,
-    BEEP_END, 0,
-    BEEP_E4, 2,
-    BEEP_END, 0,
-    BEEP_E4, 2,
-    BEEP_END, 1,
-    BEEP_D4, 2,
-    BEEP_END, 1,
-    BEEP_G4, 2,
-    BEEP_END, 1,
-    BEEP_E4, 8,
-    BEEP_FINISH, 2
-};
-
-/** 敗北した時にならすBGM */
-static volatile struct CODE lose[] = {
-    BEEP_END, 3,
-    BEEP_E4, 10,
-    BEEP_D4, 10,
-    BEEP_C4, 10,
-    BEEP_FINISH, 0
-};
-/** 現在慣らしている音の、次の音を指定するための添字 */
-static volatile u_char bgm_index = 0;
-
-/** ゲームの状態 */
-enum {
+enum GameState {
     PLAYING,
     FINISH,
-    FINISHED,
 };
-static volatile int game_state = PLAYING;
 
-static volatile int ai_clk;
+static enum GameState game_state = PLAYING;
 
+static int ai_clk;
 
-/** 各種機能やタイマカウンタで用いる変数 */
-static volatile u_char clk;
-static volatile int cursor_clk;
+static u_char clk;
+static int cursor_clk;
 
 
 /** 2ms毎に呼ばれる関数（タイマカウンタ）*/
@@ -76,7 +42,6 @@ ISR(TIMER0_COMPA_vect) {
         sound_update();
     }
 
-    // 相手がプレイヤーじゃなければ疑似思考時間
     if (get_player_turn() == BLACK) {
         if (++ai_clk >= 500) {
             ai_clk = 0;
@@ -91,7 +56,6 @@ ISR(TIMER0_COMPA_vect) {
         }
     }
 
-    // 0.5sごとにカーソルを点滅させる処理
     if (++cursor_clk >= 250) {
         cursor_clk = 0;
         target_reverse_state();
@@ -99,13 +63,12 @@ ISR(TIMER0_COMPA_vect) {
 }
 
 int main(void) {
-    // LED表示するための変数
-    DDRB = 0xff;
-    DDRC = 0x0f;
-    DDRD = 0xfa;
-    PORTC = 0x30;
+    // LED,スイッチ,ブザーのポート設定
+    DDRB = 0xFF;
+    DDRC = 0x0F;
+    DDRD = 0xFA;
+    PORTC = 0x30;   // 入力ピンをプルアップ
     PORTD = 0x00;
-    PORTB = 0x00;
 
     OCR0A = 249; // 2ms
     TCCR0A = 2; // CTC MODE
@@ -116,10 +79,8 @@ int main(void) {
     board_init();
     switch_init();
     sound_init();
-
-    win_player = NONE;
     board_reset();
-    // 最初の石とターゲットを配置
+
     matrix[3][3] = WHITE;
     matrix[4][4] = WHITE;
     matrix[3][4] = BLACK;
@@ -131,8 +92,7 @@ int main(void) {
     // 割り込み処理を実行
     sei();
 
-    // ゲームを回すforループ
-    while (1) {
+    while (true) {
         wdt_reset();
         switch_update();
 
@@ -145,29 +105,6 @@ int main(void) {
         case FINISH:
             cursor_visible(false);
             sort_led();
-            game_state = FINISHED;
-            break;
-
-        case FINISHED:
-            if (is_sound_playing() == 0) {
-                u_char f = BEEP_FINISH;
-
-                if (win_player == WHITE) {
-                    if (win[bgm_index].tone != f) {
-                        beep(win[bgm_index].tone, win[bgm_index].length);
-                        bgm_index++;
-                    }
-                } else {
-                    if (lose[bgm_index].tone != f) {
-                        beep(lose[bgm_index].tone, lose[bgm_index].length);
-                        bgm_index++;
-                    }
-                }
-            }
-
-            break;
-
-        default:
             break;
         }
     }
@@ -176,7 +113,6 @@ int main(void) {
 }
 
 
-/** ゲームの本体 */
 void othello_play() {
     // スイッチの結果を更新
     if (is_switch_changed()) {
@@ -191,7 +127,6 @@ void othello_play() {
 
         case SWITCH_BOTH:
 
-            // プレイヤー2がAIで、自分の番でなければ通らない
             if (get_player_turn() != WHITE) {
                 break;
             }

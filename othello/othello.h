@@ -10,15 +10,9 @@
 #ifndef OTHELLO_H
 #define OTHELLO_H
 
-typedef struct CODE {
-    int tone;
-    u_char length;
-} CODE;
-
-volatile u_char win_player;
-
+/**
+ * ゲーム本体
+ */
 void othello_play();
-
-void othello_reset();
 
 #endif

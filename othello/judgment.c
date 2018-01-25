@@ -22,6 +22,7 @@ void put_stone(int x, int y, int turn) {
         return;
     }
 
+    // 8方向の石の判定と裏返し
     for (vertical = -1; vertical <= 1; vertical++) {      // 上下方向
         for (horizontal = -1; horizontal <= 1; horizontal++) {  // 左右方向
             if (vertical == 0 && horizontal == 0) {
@@ -37,7 +38,7 @@ void put_stone(int x, int y, int turn) {
     }
 
     matrix[y][x] = turn; // 石を置く
-    beep(BEEP_C5, 3);
+    beep(BEEP_A4, 3);
     next_turn();
 }
 
@@ -62,8 +63,11 @@ bool can_put_stone(int x, int y, int turn) {
 
 int count_turn_over(int turn, int y, int x, int vertical, int horizontal) {
     int i;
+
+    // 相手の石の色
     int opponent = (turn == WHITE) ? BLACK : WHITE;
 
+    // 相手の石の色が出るまでforで回す
     for (i = 1; matrix[y + i * vertical][x + i * horizontal] == opponent; i++) {
         if (y + i * vertical < 0
                 || y + i * vertical > LED_SIZE - 1
@@ -120,7 +124,6 @@ void replace(int x, int y, int ix, int iy) {
 }
 
 void sort_led() {
-    int temp = 0;
     int ix = 0, iy = 0;
     int x, y;
 
@@ -137,23 +140,5 @@ void sort_led() {
             }
         }
     }
-
-    temp = LED_SIZE * iy + ix;
-
-    for (y = 0; y < LED_SIZE; y++) {
-        for (x = 0; x < LED_SIZE; x++) {
-            if (matrix[y][x] == BLACK) {
-                replace(x, y, ix, iy);
-                ix++;
-
-                if (ix == LED_SIZE) {
-                    ix = 0;
-                    iy++;
-                }
-            }
-        }
-    }
-
-    win_player = (temp > iy * LED_SIZE + ix - temp) ? WHITE : BLACK;
 }
 

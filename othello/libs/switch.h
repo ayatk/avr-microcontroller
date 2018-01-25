@@ -11,12 +11,12 @@
 #define OTHELLO_LIBS_SWITCH_H
 
 /** チャタリング待ち時間 */
-#define SW_INTERVAL 4000UL
+#define SW_INTERVAL 2000UL
 
 /**
  * スイッチの状態を定義した列挙型
  */
-enum {
+enum Switch {
     SWITCH_NONE,
     SWITCH_LEFT,
     SWITCH_RIGHT,
@@ -28,10 +28,21 @@ enum {
  */
 void switch_init();
 
+/**
+ * スイッチの状態を更新する関数
+ */
 void switch_update();
 
+/**
+ * スイッチの状態が更新されているか通知
+ * @return
+ */
 bool is_switch_changed();
 
-u_char get_switch_state();
+/**
+ * スイッチの状態
+ * @return enum Switch
+ */
+enum Switch get_switch_state();
 
 #endif

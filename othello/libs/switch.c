@@ -13,8 +13,8 @@
 #include "../std/booliean.h"
 #include "switch.h"
 
-/** スイッチとチャタリング対策に使う変数 */
-u_char state;
+// スイッチの状態
+enum Switch state;
 u_char sw_now;
 int sw_cnt;
 
@@ -28,7 +28,6 @@ ISR(PCINT1_vect) {
         pc = 1;
     }
 
-    // ブロックしているピン変化割り込みをキャンセル
     PCIFR |= _BV(PCIF1);
 }
 
@@ -37,8 +36,6 @@ void switch_init() {
     PCICR |= _BV(PCIE1);
     // 割り込みを認めるビット位置を指定
     PCMSK1 = _BV(PCINT12) | _BV(PCINT13);
-    sw_now = 0x30;
-    state = 0;
 }
 
 void switch_update() {
@@ -61,6 +58,6 @@ bool is_switch_changed() {
     return false;
 }
 
-u_char get_switch_state() {
+enum Switch get_switch_state() {
     return state;
 }

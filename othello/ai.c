@@ -12,7 +12,7 @@
 #include "board.h"
 #include "judgment.h"
 
-static volatile int map[LED_SIZE][LED_SIZE] = {
+int map[LED_SIZE][LED_SIZE] = {
     {30,  -12, 0,  -1, -1, 0,  -12, 30},
     {-12, -15, -3, -3, -3, -3, -15, -12},
     {0,   -3,  0,  -1, -1, 0,  -3,  0},
@@ -42,7 +42,7 @@ int ai(int turn) {
 
     for (y = 0; y < LED_SIZE; y++) {
         for (x = 0; x < LED_SIZE; x++) {
-            if (can_put_stone(x, y, turn) == 1) {
+            if (can_put_stone(x, y, turn)) {
                 ai_target[index].index = y * LED_SIZE + x;
                 ai_target[index].score = map[y][x];
                 index++;
@@ -50,6 +50,7 @@ int ai(int turn) {
         }
     }
 
+    // 最も高いスコアを出す
     for (i = 0; i < index; i++) {
         if (ai_target[decide].score < ai_target[i].score) {
             decide = i;
