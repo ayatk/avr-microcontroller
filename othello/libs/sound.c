@@ -9,6 +9,7 @@
 
 #include <avr/interrupt.h>
 #include "../std/types.h"
+#include "../std/booliean.h"
 #include "sound.h"
 
 static u_char period;
@@ -32,4 +33,8 @@ void sound_update() {
             TCCR2A = 0;
         }
     }
+}
+
+bool is_sound_playing() {
+    return period != 0;
 }

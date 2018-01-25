@@ -10,10 +10,15 @@
 #ifndef OTHELLO_LIBS_SOUND_H
 #define OTHELLO_LIBS_SOUND_H
 
+#include "../std/booliean.h"
+
 /**
  * ブザーの音階
  */
 enum {
+    BEEP_HIGH = 46,
+    BEEP_LOW = 168,
+
     BEEP_C4 = 238,
     BEEP_CS4 = 225,
     BEEP_D4 = 212,
@@ -38,6 +43,8 @@ enum {
     BEEP_A5 = 71,
     BEEP_AS5 = 67,
     BEEP_B5 = 63,
+    BEEP_END = 0,
+    BEEP_FINISH = 1000
 };
 
 /**
@@ -57,4 +64,6 @@ void beep(u_char tone, u_char length);
  */
 void sound_update();
 
-#endif 
+bool is_sound_playing();
+
+#endif
