@@ -11,8 +11,8 @@
 #define OTHELLO_H
 
 typedef struct CODE {
-    volatile int tone;
-    volatile u_char length;
+    int tone;
+    u_char length;
 } CODE;
 
 volatile u_char win_player;

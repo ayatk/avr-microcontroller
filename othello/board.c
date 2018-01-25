@@ -14,11 +14,11 @@
 #include "board.h"
 #include "player.h"
 
-volatile int count;
-volatile u_char led[LED_SIZE];
-static volatile u_char scan;
+int count;
+u_char led[LED_SIZE];
+static u_char scan;
 
-static volatile bool display_target = false;
+static bool display_target = false;
 
 ISR(TIMER1_COMPA_vect) {
     u_char sc;

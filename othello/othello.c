@@ -22,7 +22,7 @@
 
 
 /** 勝利した時にならすBGM */
-static volatile struct CODE win[] = {
+static struct CODE win[] = {
     BEEP_END, 3,
     BEEP_E4, 2,
     BEEP_END, 0,
