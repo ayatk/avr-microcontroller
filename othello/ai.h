@@ -7,8 +7,8 @@
  * https://opensource.org/licenses/MIT
  */
 
-#ifndef OTHELLO_AI_H_
-#define OTHELLO_AI_H_
+#ifndef OTHELLO_AI_H
+#define OTHELLO_AI_H
 
 /**
  * オセロのAI
