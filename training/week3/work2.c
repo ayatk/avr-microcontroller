@@ -167,7 +167,9 @@ int main() {
             mv_flag = 0;
             int i;
 
-            for (n = 0; n <= 7; n++) show_led[n] = led[count][n];
+            for (n = 0; n <= 7; n++) {
+                show_led[n] = led[count][n];
+            }
         }
 
     }

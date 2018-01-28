@@ -105,7 +105,9 @@ int main() {
 
             switch (sw) {
             case 1:
-                for (i = 0; i < 8; ++i) led[i] = (led[i] >> 1) | (led[i] << 7);
+                for (i = 0; i < 8; ++i) {
+                    led[i] = (led[i] >> 1) | (led[i] << 7);
+                }
 
                 break;
 
@@ -118,7 +120,9 @@ int main() {
                 reverse(led, 7);
                 reverse(led, 8);
 
-                for (k = 0; k < 8; ++k) led[k] = (led[k] >> 1) | (led[k] << 7);
+                for (k = 0; k < 8; ++k) {
+                    led[k] = (led[k] >> 1) | (led[k] << 7);
+                }
 
                 break;
             }
