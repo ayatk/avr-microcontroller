@@ -58,6 +58,7 @@ enum Color get_player_color() {
 
 void next_turn() {
     player_turn = !player_turn;
+    cursor_visible(player_turn);
 }
 
 void target_reverse_state() {
