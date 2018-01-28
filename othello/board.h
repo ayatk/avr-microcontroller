@@ -13,9 +13,11 @@
 #define LED_SIZE 8
 
 // 石の色
-#define NONE 6
-#define WHITE 1
-#define BLACK 5
+enum Color {
+    NONE = 6,
+    WHITE = 1,
+    BLACK = 5,
+};
 
 // 石の情報が入る配列
 volatile int matrix[LED_SIZE][LED_SIZE];
