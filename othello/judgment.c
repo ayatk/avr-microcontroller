@@ -117,12 +117,6 @@ int is_finish_game(enum Color turn) {
     return on;
 }
 
-void replace(int x, int y, int ix, int iy) {
-    int temp = matrix[iy][ix];
-    matrix[iy][ix] = matrix[y][x];
-    matrix[y][x] = temp;
-}
-
 void sort_led() {
     int ix = 0, iy = 0;
     int x, y;
@@ -130,7 +124,8 @@ void sort_led() {
     for (y = 0; y < LED_SIZE; y++) {
         for (x = 0; x < LED_SIZE; x++) {
             if (matrix[y][x] == WHITE) {
-                replace(x, y, ix, iy);
+                // スワップ
+                matrix[iy][ix] ^= matrix[y][x] ^= matrix[iy][ix] ^= matrix[y][x];
                 ix++;
 
                 if (ix == LED_SIZE) {
