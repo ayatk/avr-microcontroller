@@ -81,7 +81,7 @@ int main(void) {
     matrix[4][4] = WHITE;
     matrix[3][4] = BLACK;
     matrix[4][3] = BLACK;
-    target_init(2, 4, PLAYER);
+    player_init(2, 4, PLAYER);
     game_state = PLAYING;
     cursor_visible(true);
 
