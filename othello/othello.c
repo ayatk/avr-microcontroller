@@ -20,11 +20,6 @@
 #include "judgment.h"
 #include "ai.h"
 
-enum GameState {
-    PLAYING,
-    FINISH,
-};
-
 static enum GameState game_state = PLAYING;
 
 static int ai_clk;

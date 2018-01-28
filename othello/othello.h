@@ -11,6 +11,14 @@
 #define OTHELLO_H
 
 /**
+ * ゲームの状態
+ */
+enum GameState {
+    PLAYING,
+    FINISH,
+};
+
+/**
  * ゲーム本体
  */
 void othello_play();
