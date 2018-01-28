@@ -13,7 +13,7 @@
 #include "board.h"
 
 typedef struct TARGET {
-    int x, y;
+    u_char x, y;
     int state;
     int turn;
 } TARGET;
@@ -22,7 +22,7 @@ static TARGET target;
 static volatile int player1;
 static volatile int player2;
 
-void target_init(int x, int y, int p1, int p2) {
+void target_init(u_char x, u_char y, int p1, int p2) {
     target.x = x;
     target.y = y;
     player1 = p1;
