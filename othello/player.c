@@ -40,7 +40,7 @@ int get_cursor_y() {
     return cursor.y;
 }
 
-int is_cursor_flash() {
+enum Color get_cursor_color() {
     return state;
 }
 

@@ -38,7 +38,7 @@ ISR(TIMER1_COMPA_vect) {
         if (display_target == 1
                 && scan == LED_SIZE - get_cursor_y() - 1
                 && get_cursor_x() == x) {
-            timing = is_cursor_flash();
+            timing = get_cursor_color();
         } else {
             timing = matrix[LED_SIZE - scan - 1][x];
         }

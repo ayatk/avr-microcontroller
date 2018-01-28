@@ -39,10 +39,10 @@ int get_cursor_x();
 int get_cursor_y();
 
 /**
- * カーソルが光っているかどうか
+ * カーソルの色を取得
  * @return
  */
-int is_cursor_flash();
+enum Color get_cursor_color();
 
 /**
  * カーソルを右に動かす
