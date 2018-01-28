@@ -17,10 +17,10 @@
  * スイッチの状態を定義した列挙型
  */
 enum Switch {
-    NONE,
-    LEFT,
-    RIGHT,
-    BOTH
+    SWITCH_NONE,
+    SWITCH_LEFT,
+    SWITCH_RIGHT,
+    SWITCH_BOTH
 };
 
 /**
