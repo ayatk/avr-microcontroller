@@ -36,9 +36,9 @@ int get_cursor_y();
 int is_cursor_flash();
 
 /**
- * カーソルを左に動かす
+ * カーソルを右に動かす
  */
-void cursor_move_left();
+void cursor_move_right();
 
 /**
  * カーソルを下に動かす

@@ -44,7 +44,7 @@ int is_cursor_flash() {
     return state;
 }
 
-void cursor_move_left() {
+void cursor_move_right() {
     cursor.x = (u_char) ((cursor.x + 1) & 7);
 }
 

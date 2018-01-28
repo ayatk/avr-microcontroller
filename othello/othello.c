@@ -119,7 +119,7 @@ void othello_play() {
     if (is_switch_changed()) {
         switch (get_switch_state()) {
         case SWITCH_LEFT:
-            cursor_move_left();
+            cursor_move_right();
             break;
 
         case SWITCH_RIGHT:
