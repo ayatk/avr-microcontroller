@@ -25,7 +25,7 @@ void target_init(u_char x, u_char y, enum Player player) {
     cursor.x = x;
     cursor.y = y;
     player_turn = (player == PLAYER);
-    state = get_player_color(player);
+    state = (player == PLAYER) ? WHITE : BLACK;
 }
 
 int get_cursor_x() {
