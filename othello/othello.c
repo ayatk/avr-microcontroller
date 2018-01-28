@@ -118,15 +118,15 @@ void othello_play() {
     // スイッチの結果を更新
     if (is_switch_changed()) {
         switch (get_switch_state()) {
-        case SWITCH_LEFT:
+        case LEFT:
             cursor_move_right();
             break;
 
-        case SWITCH_RIGHT:
+        case RIGHT:
             cursor_move_down();
             break;
 
-        case SWITCH_BOTH:
+        case BOTH:
 
             // AIのターンなら操作無効
             if (get_player_turn() == AI) {
