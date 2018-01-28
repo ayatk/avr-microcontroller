@@ -25,7 +25,7 @@ static bool player_turn;
 // プレーヤーのカーソルを点滅させる時に使う
 static enum Color state;
 
-void target_init(u_char x, u_char y, enum Player player) {
+void player_init(u_char x, u_char y, enum Player player) {
     cursor.x = x;
     cursor.y = y;
     player_turn = (player == PLAYER);

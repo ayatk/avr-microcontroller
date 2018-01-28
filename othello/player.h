@@ -10,12 +10,21 @@
 #ifndef OTHELLO_PLAYER_H
 #define OTHELLO_PLAYER_H
 
+/**
+ * プレーヤーの状態
+ */
 enum Player {
     PLAYER,
     AI,
 };
 
-void target_init(u_char x, u_char y, enum Player player);
+/**
+ * プレーヤーの初期化処理
+ * @param x 起動時にプレーヤーのカーソルを置くX座標 (0 <= X <= 7)
+ * @param y 起動時にプレーヤーのカーソルを置くY座標 (0 <= Y <= 7)
+ * @param player 先行のプレーヤー
+ */
+void player_init(u_char x, u_char y, enum Player player);
 
 /**
  * カーソルのX座標
