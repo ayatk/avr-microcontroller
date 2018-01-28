@@ -16,3 +16,7 @@ u_int rand() {
     rnd++;  // 乱数更新
     return rnd ^ (rnd >> 1);    // グレイコードカウンタ
 }
+
+void rand_update() {
+    rnd++;
+}

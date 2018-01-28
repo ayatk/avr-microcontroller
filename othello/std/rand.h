@@ -16,4 +16,9 @@
  */
 u_int rand();
 
+/**
+ * 乱数値更新
+ */
+void rand_update();
+
 #endif
