@@ -7,11 +7,18 @@ W = 0
 # Exercise number
 E = 0
 
+# Work directory
+WORKDIR := othello
+
+# Libraries directory
+STDDIR := std
+LIBDIR := libs
+
 # Source files
 ifeq ($(W), 0)
-	SRCS = $(wildcard src/*.c)
+	SRCS := $(wildcard $(WORKDIR)/$(STDDIR)/*.c) $(wildcard $(WORKDIR)/$(LIBDIR)/*.c) $(wildcard $(WORKDIR)/*.c)
 else
-	SRCS = training/week$(W)/work$(E).c
+	SRCS := training/week$(W)/work$(E).c
 endif
 
 # Device name
@@ -26,42 +33,42 @@ endif
 # output source directory
 OUT_DIR = build
 
-WORK_DIR = ${OUT_DIR}/${PROJECT}
+WORK_DIR = $(OUT_DIR)/$(PROJECT)
 
 # OBJECTS = $(SRCS:.c=.o)
 OBJECTS = $(patsubst %.c,$(OUT_DIR)/%.o,$(SRCS))
 MPU = atmega88pa
 F_CPU = 8000000UL
 
-MAPFILE = ${WORK_DIR}.map
-LSSFILE = ${WORK_DIR}.lss
-ELFFILE = ${WORK_DIR}.elf
-HEXFILE = ${WORK_DIR}.hex
-EEPFILE = ${WORK_DIR}.eep
+MAPFILE = $(WORK_DIR).map
+LSSFILE = $(WORK_DIR).lss
+ELFFILE = $(WORK_DIR).elf
+HEXFILE = $(WORK_DIR).hex
+EEPFILE = $(WORK_DIR).eep
 
 CC = avr-gcc
-CFLAGS = -mmcu=${MPU} -W -Wall -Werror-implicit-function-declaration -DF_CPU=${F_CPU} -Os -g2
+CFLAGS = -mmcu=$(MPU) -W -Wall -Werror-implicit-function-declaration -DF_CPU=$(F_CPU) -Os -g2
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums
 CFLAGS += -fdiagnostics-color
-LDFLAGS = -mmcu=${MPU} -Wl,-Map=${MAPFILE}
+LDFLAGS = -mmcu=$(MPU) -Wl,-Map=$(MAPFILE)
 
-all: clean ${HEXFILE}
+all: clean $(HEXFILE)
 
-${HEXFILE}:	${OBJECTS}
-	avr-gcc ${LDFLAGS} ${OBJECTS} -o ${ELFFILE}
-	avr-objcopy -j.text -j.data -O ihex ${ELFFILE} ${HEXFILE}
-	avr-objcopy -j.eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings -O ihex ${ELFFILE} ${EEPFILE}
-	avr-objdump -h -S ${ELFFILE} > ${LSSFILE}
+$(HEXFILE):	$(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $(ELFFILE)
+	avr-objcopy -j.text -j.data -O ihex $(ELFFILE) $(HEXFILE)
+	avr-objcopy -j.eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings -O ihex $(ELFFILE) $(EEPFILE)
+	avr-objdump -h -S $(ELFFILE) > $(LSSFILE)
 	@echo
-	@avr-size -C --mcu=${MPU} ${ELFFILE}
+	@avr-size -C --mcu=$(MPU) $(ELFFILE)
 
 dl:	all
-	bin/emb88_reset ${DEV}
-	/bin/cp ${HEXFILE} ${DEV}
+	bin/emb88_reset $(DEV)
+	/bin/cp $(HEXFILE) $(DEV)
 
 clean:
-	/bin/rm -fr ${OUT_DIR} ./a.out **/*.[iso] *~
+	/bin/rm -fr $(OUT_DIR) ./a.out **/*.[iso] *~
 
-${OUT_DIR}/%.o: %.c
+$(OUT_DIR)/%.o: %.c
 	@if [ ! -e `dirname $@` ]; then mkdir -p `dirname $@`; fi
-	${CC}  -c  $< -o $@ ${CFLAGS}
+	$(CC) -c $< -o $@ $(CFLAGS)
