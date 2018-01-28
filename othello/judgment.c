@@ -15,7 +15,7 @@
 #include "libs/sound.h"
 #include "judgment.h"
 
-void put_stone(int x, int y, int turn) {
+void put_stone(int x, int y, enum Color turn) {
     int count, vertical, horizontal, i;
 
     if (!can_put_stone(x, y, turn)) {
@@ -42,7 +42,7 @@ void put_stone(int x, int y, int turn) {
     next_turn();
 }
 
-bool can_put_stone(int x, int y, int turn) {
+bool can_put_stone(int x, int y, enum Color turn) {
     int vertical, horizontal;
 
     if (matrix[y][x] != NONE) {
@@ -61,11 +61,11 @@ bool can_put_stone(int x, int y, int turn) {
 }
 
 
-int count_turn_over(int turn, int y, int x, int vertical, int horizontal) {
+int count_turn_over(enum Color turn, int y, int x, int vertical, int horizontal) {
     int i;
 
     // 相手の石の色
-    int opponent = (turn == WHITE) ? BLACK : WHITE;
+    enum Color opponent = (turn == WHITE) ? BLACK : WHITE;
 
     // 相手の石の色が出るまでforで回す
     for (i = 1; matrix[y + i * vertical][x + i * horizontal] == opponent; i++) {
@@ -92,7 +92,7 @@ int count_turn_over(int turn, int y, int x, int vertical, int horizontal) {
 }
 
 
-int is_finish_game(int turn) {
+int is_finish_game(enum Color turn) {
     int x, y;
     int on = 0;
 

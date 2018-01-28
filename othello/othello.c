@@ -42,14 +42,15 @@ ISR(TIMER0_COMPA_vect) {
         sound_update();
     }
 
-    if (get_player_turn() == BLACK) {
+    // AIのターン
+    if (get_player_turn() == AI) {
         if (++ai_clk >= 500) {
             ai_clk = 0;
 
-            int check = ai(get_player_turn());
-
-            if (check == 1) {
-                if (is_finish_game(get_player_turn()) > 0) {
+            // AIが石をおく。
+            // どこにも置けなければゲーム終了
+            if (ai(get_player_color())) {
+                if (is_finish_game(get_player_color()) > 0) {
                     game_state = FINISH;
                 }
             }
@@ -85,7 +86,7 @@ int main(void) {
     matrix[4][4] = WHITE;
     matrix[3][4] = BLACK;
     matrix[4][3] = BLACK;
-    target_init(2, 4, WHITE, BLACK);
+    target_init(2, 4, PLAYER);
     game_state = PLAYING;
     cursor_visible(true);
 
@@ -127,17 +128,21 @@ void othello_play() {
 
         case SWITCH_BOTH:
 
-            if (get_player_turn() != WHITE) {
+            // AIのターンなら操作無効
+            if (get_player_turn() == AI) {
                 break;
             }
 
-            put_stone(get_cursor_x(), get_cursor_y(), get_player_turn());
+            put_stone(get_cursor_x(), get_cursor_y(), get_player_color());
 
-            if (is_finish_game(get_player_turn()) > 0) {
+            if (is_finish_game(get_player_color()) > 0) {
                 game_state = FINISH;
             }
 
             ai_clk = 0;
+            break;
+
+        default:
             break;
         }
     }

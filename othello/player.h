@@ -10,12 +10,12 @@
 #ifndef OTHELLO_PLAYER_H
 #define OTHELLO_PLAYER_H
 
-enum {
+enum Player {
     PLAYER,
     AI,
 };
 
-void target_init(u_char x, u_char y, int p1, int p2);
+void target_init(u_char x, u_char y, enum Player player);
 
 /**
  * カーソルのX座標
@@ -49,7 +49,13 @@ void cursor_move_down();
  * 現在のターンのプレーヤーを取得
  * @return AIかPLAYERか
  */
-int get_player_turn();
+enum Player get_player_turn();
+
+/**
+ * 現在のターンのプレーヤーの石の色を取得
+ * @return 石の色
+ */
+enum Color get_player_color();
 
 /**
  * 次のプレーヤーに移行

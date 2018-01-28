@@ -13,8 +13,8 @@
 /**
  * オセロのAI
  * @param turn 石の色
- * @return
+ * @return どこかに石を置けたかどうか
  */
-int ai(int turn);
+bool ai(enum Color turn);
 
 #endif

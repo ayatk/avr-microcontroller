@@ -12,53 +12,55 @@
 #include "player.h"
 #include "board.h"
 
-typedef struct TARGET {
-    u_char x, y;
-    int state;
-    int turn;
-} TARGET;
+typedef struct Cursor {
+    u_char x;
+    u_char y;
+} Cursor;
 
-static TARGET target;
-static volatile int player1;
-static volatile int player2;
+static Cursor cursor;
+static bool player_turn;
+static enum Color state;
 
-void target_init(u_char x, u_char y, int p1, int p2) {
-    target.x = x;
-    target.y = y;
-    player1 = p1;
-    player2 = p2;
-    target.state = target.turn = p1;
+void target_init(u_char x, u_char y, enum Player player) {
+    cursor.x = x;
+    cursor.y = y;
+    player_turn = (player == PLAYER);
+    state = get_player_color(player);
 }
 
 int get_cursor_x() {
-    return target.x;
+    return cursor.x;
 }
 
 int get_cursor_y() {
-    return target.y;
+    return cursor.y;
 }
 
 int is_cursor_flash() {
-    return target.state;
+    return state;
 }
 
 void cursor_move_left() {
-    target.x = (u_char) ((target.x + 1) & 7);
+    cursor.x = (u_char) ((cursor.x + 1) & 7);
 }
 
 void cursor_move_down() {
-    target.y = (u_char) ((target.y + 1) & 7);
+    cursor.y = (u_char) ((cursor.y + 1) & 7);
 }
 
-int get_player_turn() {
-    return target.turn;
+enum Player get_player_turn() {
+    return (player_turn) ? PLAYER : AI;
+}
+
+enum Color get_player_color() {
+    return (get_player_turn() == PLAYER) ? WHITE : BLACK;
 }
 
 void next_turn() {
-    target.turn = (target.turn == player1) ? player2 : player1;
+    player_turn = !player_turn;
 }
 
 void target_reverse_state() {
-    target.state = (target.state == target.turn) ? NONE : target.turn;
+    state = (state != NONE) ? NONE : get_player_color();
 }
 

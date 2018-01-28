@@ -8,9 +8,9 @@
  */
 
 #include "std/booliean.h"
-#include "ai.h"
 #include "board.h"
 #include "judgment.h"
+#include "ai.h"
 
 int map[LED_SIZE][LED_SIZE] = {
     {30,  -12, 0,  -1, -1, 0,  -12, 30},
@@ -28,7 +28,7 @@ typedef struct AI_TARGET {
     int score;// 重み
 } AI_TARGET;
 
-int ai(int turn) {
+bool ai(enum Color turn) {
     int x, y;
     int i;
     AI_TARGET ai_target[64];
