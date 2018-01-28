@@ -38,4 +38,9 @@ void board_reset();
  */
 void cursor_visible(bool enable);
 
+/**
+ * 終了時に石を綺麗に並べる
+ */
+void sort_led();
+
 #endif

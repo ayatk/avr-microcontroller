@@ -49,9 +49,4 @@ int count_turn_over(enum Color turn, int x, int y, int vertical, int horizontal)
  */
 int is_finish_game(enum Color turn);
 
-/**
- * 終了時に石を綺麗に並べる
- */
-void sort_led();
-
 #endif

@@ -78,3 +78,25 @@ void board_reset() {
 void cursor_visible(bool enable) {
     display_target = enable;
 }
+
+
+void sort_led() {
+    int ix = 0, iy = 0;
+    int x, y;
+
+    for (y = 0; y < LED_SIZE; y++) {
+        for (x = 0; x < LED_SIZE; x++) {
+            if (matrix[y][x] == WHITE) {
+                // スワップ
+                matrix[iy][ix] ^= matrix[y][x] ^= matrix[iy][ix] ^= matrix[y][x];
+                ix++;
+
+                if (ix == LED_SIZE) {
+                    ix = 0;
+                    iy++;
+                }
+            }
+        }
+    }
+}
+
