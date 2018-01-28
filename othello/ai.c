@@ -12,6 +12,7 @@
 #include "judgment.h"
 #include "ai.h"
 
+// 重み付けまっぷ
 int map[LED_SIZE][LED_SIZE] = {
     {30,  -12, 0,  -1, -1, 0,  -12, 30},
     {-12, -15, -3, -3, -3, -3, -15, -12},

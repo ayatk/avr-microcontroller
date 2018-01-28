@@ -12,13 +12,17 @@
 #include "player.h"
 #include "board.h"
 
+// プレーヤーカーソルの座標系
 typedef struct Cursor {
     u_char x;
     u_char y;
 } Cursor;
 
+// プレーヤーカーソル
 static Cursor cursor;
+// プレーヤーのターンかどうか
 static bool player_turn;
+// プレーヤーのカーソルを点滅させる時に使う
 static enum Color state;
 
 void target_init(u_char x, u_char y, enum Player player) {
