@@ -28,13 +28,13 @@ void player_init(u_char x, u_char y, enum Player player);
 
 /**
  * カーソルのX座標
- * @return
+ * @return X座標
  */
 int get_cursor_x();
 
 /**
- * カーソルの座標
- * @return
+ * カーソルのY座標
+ * @return Y座標
  */
 int get_cursor_y();
 
