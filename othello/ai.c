@@ -24,15 +24,15 @@ int map[LED_SIZE][LED_SIZE] = {
     {30,  -12, 0,  -1, -1, 0,  -12, 30}
 };
 
-typedef struct AI_TARGET {
-    int index;// 座標
-    int score;// 重み
-} AI_TARGET;
+typedef struct AiTarget {
+    int index; // 座標
+    int score; // 重み
+} AiTarget;
 
 bool ai(enum Color turn) {
     int x, y;
     int i;
-    AI_TARGET ai_target[64];
+    AiTarget ai_target[64];
     int index = 0;
     int decide = 0;
 
@@ -63,8 +63,8 @@ bool ai(enum Color turn) {
         x = index % LED_SIZE;
         y = index / LED_SIZE;
         put_stone(x, y, turn);
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
