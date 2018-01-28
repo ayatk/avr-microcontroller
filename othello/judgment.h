@@ -12,8 +12,8 @@
 
 /**
  * 指定した座標に石が置けるか判定する
- * @param x 盤のX座標
- * @param y 盤のX座標
+ * @param x ボードのX座標
+ * @param y ボードのX座標
  * @param turn 石の色
  * @return 置けるならtrue、置けないならfalse
  */
@@ -21,21 +21,23 @@ bool can_put_stone(int x, int y, enum Color turn);
 
 /**
  * 指定した座標に石を置く
- * @param x 盤のX座標
- * @param y 盤のX座標
+ *
+ * @param x ボードのX座標
+ * @param y ボードのX座標
  * @param turn 石の色
  */
 void put_stone(int x, int y, enum Color turn);
 
 /**
  * ある方向にある相手の石をどれだけひっくり返せるかを計算する
+ * verticalは-1が上方向、0が現在の位置、1が下方向を表す。
+ * horizontalは-1が左、0が現在の位置、1が右を表す。
  *
- * verticalとhorizontalは-1が上方向、0が現在の位置、1が下方向を表す。
- * @param x 盤のX座標
- * @param y 盤のX座標
+ * @param x ボードのX座標
+ * @param y ボードのX座標
  * @param turn 石の色
  * @param vertical Y方向
- * @param horizontal X方向の
+ * @param horizontal X方向
  * @return ひっくり返せる石の数
  */
 int count_turn_over(enum Color turn, int x, int y, int vertical, int horizontal);
