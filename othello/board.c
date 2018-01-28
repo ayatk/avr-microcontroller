@@ -79,6 +79,12 @@ void cursor_visible(bool enable) {
     display_target = enable;
 }
 
+void replace(int x, int y, int ix, int iy) {
+    int temp = matrix[iy][ix];
+    matrix[iy][ix] = matrix[y][x];
+    matrix[y][x] = temp;
+}
+
 
 void sort_led() {
     int ix = 0, iy = 0;
@@ -87,8 +93,7 @@ void sort_led() {
     for (y = 0; y < LED_SIZE; y++) {
         for (x = 0; x < LED_SIZE; x++) {
             if (matrix[y][x] == WHITE) {
-                // スワップ
-                matrix[iy][ix] ^= matrix[y][x] ^= matrix[iy][ix] ^= matrix[y][x];
+                replace(x, y, ix, iy);
                 ix++;
 
                 if (ix == LED_SIZE) {
