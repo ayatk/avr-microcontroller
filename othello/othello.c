@@ -54,7 +54,7 @@ ISR(TIMER0_COMPA_vect) {
 
     if (++cursor_clk >= 250) {
         cursor_clk = 0;
-        target_reverse_state();
+        reverse_cursor_state();
     }
 }
 

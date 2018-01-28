@@ -74,6 +74,6 @@ void next_turn();
 /**
  * カーソルの状態を反転させる
  */
-void target_reverse_state();
+void reverse_cursor_state();
 
 #endif

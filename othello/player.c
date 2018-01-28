@@ -65,7 +65,7 @@ void next_turn() {
     cursor_visible(player_turn);
 }
 
-void target_reverse_state() {
+void reverse_cursor_state() {
     state = (state != NONE) ? NONE : get_player_color();
 }
 
