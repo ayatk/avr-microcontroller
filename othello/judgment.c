@@ -38,7 +38,7 @@ void put_stone(int x, int y, enum Color turn) {
     }
 
     matrix[y][x] = turn; // 石を置く
-    beep(BEEP_A4, 3);
+    beep(A4, 3);
     next_turn();
 }
 

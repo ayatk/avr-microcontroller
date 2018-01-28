@@ -21,7 +21,7 @@ void sound_init() {
     TCCR2B = 0x44;
 }
 
-void beep(int tone, int length) {
+void beep(enum Scale tone, int length) {
     OCR2A = tone;
     period = length;
     TCCR2A = 0x12;
