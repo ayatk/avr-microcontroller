@@ -44,8 +44,7 @@ ISR(TIMER1_COMPA_vect) {
         }
 
         if (count % timing == 0) {
-            u_char temp = 1 << (LED_SIZE - x - 1);
-            led[scan] |= temp;
+            led[scan] |= 1 << (LED_SIZE - x - 1);
         }
     }
 
